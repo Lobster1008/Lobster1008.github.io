@@ -3,20 +3,18 @@
 <head>
   <script>
     (function (win, export_obj) {
-      win["TeaAnalyticsObject"] = export_obj;
-      if (!win[export_obj]) {
-        function _collect() {
-          _collect.q.push(arguments);
-        }
-        _collect.q = _collect.q || [];
-        win[export_obj] = _collect;
-      }
-      win[export_obj].l = +new Date();
-    })(window, "collectEvent");
+  win["TeaAnalyticsObject"] = export_obj;
+  if (!win[export_obj]) {
+    function _collect() { _collect.q.push(arguments); } // 將指令暫存在 q 陣列中
+    _collect.q = _collect.q || [];
+    win[export_obj] = _collect;
+  }
+  win[export_obj].l = +new Date();
+})(window, "collectEvent");
   </script>
   <script
     async
-    src="https://ma.altatech.tw/minio.byterangers.onpremise.docor.static/collect-privity-v5.2.6.js"
+    src="src="collect-rangers-v5.2.1.js"
   ></script>
   <script>
     window.collectEvent("init", {
