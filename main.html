@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>優惠彙整小站 - GitHub 版</title>
-  
+  <title>優惠雷達彙整站 - GitHub 版</title>
+
   <script>
     (function (win, export_obj) {
       win["TeaAnalyticsObject"] = export_obj;
@@ -20,143 +20,158 @@
   <script>
     window.collectEvent("init", {
       app_id: 10000047,
-      channel_domain: "https://ma.altatech.tw/", 
-      autotrack: true, // 開啟自動全埋點
-      log: true // 建議在 GitHub Pages 測試時開啟，可在 Console 查看發送狀態
+      channel_domain: "https://ma.altatech.tw/",
+      autotrack: true, // 開啟自動點擊追蹤
+      log: true // 在 Console 顯示發送日誌，方便調試
     });
     window.collectEvent("start");
   </script>
 
   <script async src="./collect-rangers-v5.2.1.js"></script>
+
   <style>
-    /* CSS 保持不變 */
-    :root { --bg: #fff7fb; --accent: #ff5fa2; --text: #4a4a4a; }
-    body { background: var(--bg); font-family: sans-serif; color: var(--text); margin: 0; }
-    .app { max-width: 1000px; margin: 0 auto; padding: 20px; }
-    .header { margin-bottom: 30px; }
-    .search-box { background: #white; border: 2px solid var(--accent); border-radius: 12px; padding: 10px; display: flex; align-items: center; margin-bottom: 15px; }
-    .search-box input { border: none; outline: none; width: 100%; font-size: 16px; margin-left: 10px; }
-    .filter-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-    .tag { padding: 6px 14px; border-radius: 20px; border: 1px solid #ddd; background: #fff; cursor: pointer; transition: 0.2s; }
-    .tag.active { background: var(--accent); color: white; border-color: var(--accent); }
-    .content { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
-    .deal-card { background: white; padding: 15px; border-radius: 12px; margin-bottom: 12px; cursor: pointer; border: 2px solid transparent; display: flex; justify-content: space-between; align-items: center; }
-    .deal-card.selected { border-color: var(--accent); background: #fff0f6; }
-    .deal-store { font-weight: bold; font-size: 14px; color: #888; }
-    .deal-tag { font-size: 18px; margin-top: 4px; font-weight: bold; }
-    .saving-amount { color: var(--accent); font-weight: bold; font-size: 16px; }
-    .side-panel { background: white; border-radius: 12px; padding: 20px; position: sticky; top: 20px; height: fit-content; min-height: 300px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .preview-title { font-size: 22px; font-weight: bold; margin-bottom: 15px; color: var(--accent); }
-    .preview-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; }
-    @media (max-width: 768px) { .content { grid-template-columns: 1fr; } .side-panel { position: static; } }
+    /* 這裡使用您圖中的粉色系配色 */
+    :root { --accent: #ff5fa2; --bg: #fff7fb; }
+    body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+    .app { max-width: 900px; margin: 0 auto; }
+    .search-bar { width: 100%; padding: 12px; border: 2px solid var(--accent); border-radius: 8px; margin-bottom: 20px; box-sizing: border-box; }
+    .filter-group { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .btn-tag { padding: 8px 16px; border: 1px solid #ddd; border-radius: 20px; background: #fff; cursor: pointer; }
+    .btn-tag.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .main-grid { display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+    .deal-item { background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+    .deal-item:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .deal-item.selected { border-color: var(--accent); background: #fff0f5; }
+    .preview-box { background: #fff; padding: 20px; border-radius: 12px; position: sticky; top: 20px; min-height: 200px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .btn-link { display: block; text-align: center; background: var(--accent); color: #fff; padding: 10px; border-radius: 6px; text-decoration: none; margin-top: 15px; }
+    @media (max-width: 700px) { .main-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
+
   <div class="app">
-    <header class="header">
-      <h1>優惠雷達聚合站</h1>
-      <p>您的專屬 GitHub 優惠實驗室</p>
-    </header>
+    <h1>🎁 優惠雷達聚合站</h1>
+    
+    <input type="text" id="searchInput" class="search-bar" placeholder="搜尋店家或優惠..." />
 
-    <section class="filters">
-      <div class="search-box">
-        <span>🔍</span>
-        <input id="searchInput" type="text" placeholder="搜尋關鍵字..." />
-      </div>
-      <div class="filter-tags" id="typeFilters">
-        <button class="tag active" data-type="all">全部</button>
-        <button class="tag" data-type="student">學生優惠</button>
-        <button class="tag" data-type="birthday">壽星</button>
-      </div>
-    </section>
+    <div class="filter-group" id="filterGroup">
+      <button class="btn-tag active" data-type="all">全部</button>
+      <button class="btn-tag" data-type="student">學生</button>
+      <button class="btn-tag" data-type="birthday">壽星</button>
+    </div>
 
-    <div class="content">
-      <ul class="deals-list" id="dealsList"></ul>
-      <aside class="side-panel" id="previewArea">
-        <div class="empty-hint">選擇優惠查看詳情</div>
-      </aside>
+    <div class="main-grid">
+      <div id="listContainer"></div>
+      <div class="preview-box" id="previewBox">
+        <p style="color: #888;">請選擇左側優惠查看詳情</p>
+      </div>
     </div>
   </div>
 
   <script>
     const deals = [
-      { id: 1, store: "咖啡屋", title: "買一送一", type: ["all"], description: "限時優惠...", savingShort: "50% OFF", link: "https://example.com" },
-      { id: 2, store: "學生食堂", title: "學生證 9 折", type: ["student"], description: "憑證件享優惠...", savingShort: "9 折", link: "https://example.com" }
+      { id: 101, store: "星巴克", title: "全品項買一送一", type: "all", desc: "限時指定時段優惠...", link: "https://starbucks.com.tw" },
+      { id: 102, store: "麥當勞", title: "學生套餐 89 元起", type: "student", desc: "憑有效學生證...", link: "https://mcdonalds.com.tw" },
+      { id: 103, store: "陶板屋", title: "壽星當月 5 折", type: "birthday", desc: "生日專屬好禮...", link: "https://tokiya.com.tw" }
     ];
 
-    let activeType = "all";
-    let activeDealId = null;
+    let currentFilter = 'all';
     let searchTimer = null;
 
-    function renderDeals() {
-      const list = document.getElementById("dealsList");
-      const keyword = document.getElementById("searchInput").value.toLowerCase();
+    // 渲染列表
+    function render() {
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+      const container = document.getElementById('listContainer');
       
       const filtered = deals.filter(d => 
-        (activeType === "all" || d.type.includes(activeType)) &&
+        (currentFilter === 'all' || d.type === currentFilter) &&
         (d.store.includes(keyword) || d.title.includes(keyword))
       );
 
-      list.innerHTML = filtered.map(d => `
-        <li class="deal-card ${activeDealId === d.id ? 'selected' : ''}" onclick="selectDeal(${d.id})">
-          <div>
-            <div class="deal-store">${d.store}</div>
-            <div class="deal-tag">${d.title}</div>
-          </div>
-          <div class="saving-amount">${d.savingShort}</div>
-        </li>
-      `).join("");
+      container.innerHTML = filtered.map(d => `
+        <div class="deal-item" onclick="viewDetail(${d.id})" data-id="${d.id}">
+          <small>${d.store}</small>
+          <div style="font-size: 18px; font-weight: bold; margin-top: 5px;">${d.title}</div>
+        </div>
+      `).join('');
+      
+      // 觸發一次曝光偵測
+      checkExposure();
     }
 
-    function selectDeal(id) {
-      activeDealId = id;
+    // 查看詳情並點擊埋點
+    function viewDetail(id) {
       const deal = deals.find(d => d.id === id);
-      const preview = document.getElementById("previewArea");
-      preview.innerHTML = `
-        <div class="preview-title">${deal.title}</div>
-        <p>${deal.description}</p>
-        <a href="${deal.link}" class="preview-link" onclick="trackConversion(${id})">前往官網 ↗</a>
-      `;
-      renderDeals();
+      const box = document.getElementById('previewBox');
+      
+      // 更新選中樣式
+      document.querySelectorAll('.deal-item').forEach(el => {
+        el.classList.toggle('selected', parseInt(el.dataset.id) === id);
+      });
 
-      // 埋點：點擊卡片
+      box.innerHTML = `
+        <h3>${deal.store}</h3>
+        <p>${deal.title}</p>
+        <p style="color: #666; font-size: 14px;">${deal.desc}</p>
+        <a href="${deal.link}" class="btn-link" onclick="trackGo('${deal.store}')">前往官網 ↗</a>
+      `;
+
+      // 埋點：點擊優惠卡片
       window.collectEvent("deal_card_click", {
         deal_id: id,
         deal_store: deal.store,
-        filter_context: activeType
+        from_filter: currentFilter
       });
     }
 
-    function trackConversion(id) {
-      // 埋點：轉化跳轉
-      window.collectEvent("conversion_click", {
-        deal_id: id,
-        source: "github_main_page"
+    // 埋點：轉換跳轉
+    function trackGo(store) {
+      window.collectEvent("conversion_exit", {
+        target_store: store,
+        page_source: "github_main"
       });
     }
 
-    // 搜尋防抖埋點
-    document.getElementById("searchInput").addEventListener("input", () => {
-      renderDeals();
+    // 搜尋埋點（防抖）
+    document.getElementById('searchInput').addEventListener('input', () => {
+      render();
       clearTimeout(searchTimer);
       searchTimer = setTimeout(() => {
-        const val = document.getElementById("searchInput").value;
+        const val = document.getElementById('searchInput').value;
         if(val) window.collectEvent("search_action", { keyword: val });
       }, 1000);
     });
 
     // 分類篩選埋點
-    document.getElementById("typeFilters").addEventListener("click", (e) => {
-      if(e.target.classList.contains("tag")) {
-        activeType = e.target.dataset.type;
-        document.querySelectorAll(".tag").forEach(t => t.classList.remove("active"));
-        e.target.classList.add("active");
-        renderDeals();
-        window.collectEvent("filter_change", { category: activeType });
+    document.getElementById('filterGroup').addEventListener('click', (e) => {
+      if(e.target.classList.contains('btn-tag')) {
+        currentFilter = e.target.dataset.type;
+        document.querySelectorAll('.btn-tag').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        render();
+        window.collectEvent("filter_change", { filter_type: currentFilter });
       }
     });
 
-    renderDeals();
+    // 曝光埋點（偵測卡片出現在螢幕上）
+    function checkExposure() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            const id = entry.target.dataset.id;
+            window.collectEvent("$bav2b_exposure", {
+              exposure_type: "card",
+              deal_id: id
+            });
+            observer.unobserve(entry.target); // 偵測過後就停止追蹤，避免重複觸發
+          }
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('.deal-item').forEach(el => observer.observe(el));
+    }
+
+    render();
   </script>
 </body>
 </html>
