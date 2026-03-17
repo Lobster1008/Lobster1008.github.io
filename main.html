@@ -1,1236 +1,162 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>優惠彙整小站 - GitHub 版</title>
+  
   <script>
     (function (win, export_obj) {
-  win["TeaAnalyticsObject"] = export_obj;
-  if (!win[export_obj]) {
-    function _collect() { _collect.q.push(arguments); } // 將指令暫存在 q 陣列中
-    _collect.q = _collect.q || [];
-    win[export_obj] = _collect;
-  }
-  win[export_obj].l = +new Date();
-})(window, "collectEvent");
+      win["TeaAnalyticsObject"] = export_obj;
+      if (!win[export_obj]) {
+        function _collect() { _collect.q.push(arguments); }
+        _collect.q = _collect.q || [];
+        win[export_obj] = _collect;
+      }
+      win[export_obj].l = +new Date();
+    })(window, "collectEvent");
   </script>
-  <script
-    async
-    src="src="collect-rangers-v5.2.1.js"
-  ></script>
+
   <script>
     window.collectEvent("init", {
       app_id: 10000047,
-      channel_domain: "https://cdp.altatech.tw", // 替换为私有部署部署服务地址
-      disable_sdk_monitor: true, // 用于禁止SDK启动后自身监控事件 onload 的上报
+      channel_domain: "https://ma.altatech.tw/", 
+      autotrack: true, // 開啟自動全埋點
+      log: true // 建議在 GitHub Pages 測試時開啟，可在 Console 查看發送狀態
     });
     window.collectEvent("start");
   </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>優惠彙整小站</title>
+
+  <script async src="./collect-rangers-v5.2.1.js"></script>
   <style>
-    :root {
-      --bg: #fff7fb;
-      --bg-soft: #fff1f8;
-      --card: #ffffff;
-      --accent: #ff5fa2;
-      --accent-soft: rgba(255, 95, 162, 0.16);
-      --text: #0f172a;
-      --muted: #6b7280;
-      --border: rgba(148, 163, 184, 0.55);
-      --radius-lg: 16px;
-      --radius-md: 10px;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui,
-        -system-ui, "PingFang TC", "Microsoft JhengHei", sans-serif;
-      background:
-        radial-gradient(circle at 12% 8%, rgba(255, 95, 162, 0.22), transparent 45%),
-        radial-gradient(circle at 88% 12%, rgba(56, 189, 248, 0.22), transparent 42%),
-        radial-gradient(circle at 70% 88%, rgba(167, 139, 250, 0.25), transparent 45%),
-        linear-gradient(180deg, #fff7fb, #f6fbff 55%, #ffffff);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 32px 16px;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 1080px;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(255, 95, 162, 0.10), transparent 52%),
-        radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.12), transparent 55%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86));
-      border-radius: 28px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: var(--shadow-soft);
-      padding: 20px 22px 24px;
-      backdrop-filter: blur(16px);
-    }
-
-    @media (min-width: 768px) {
-      .app {
-        padding: 24px 26px 30px;
-      }
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      padding: 2px;
-      background: conic-gradient(
-        from 140deg,
-        #ff5fa2,
-        #a78bfa,
-        #38bdf8,
-        #ff5fa2
-      );
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 26px rgba(255, 95, 162, 0.35);
-    }
-
-    .logo-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-      background: radial-gradient(circle at 30% 0, #ffb4d6, #ffffff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #7c2d12;
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: 0.02em;
-    }
-
-    .title-block {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .title-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .title {
-      font-size: 19px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-
-    .chip-beta {
-      font-size: 11px;
-      text-transform: uppercase;
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.5);
-      color: #e0f2fe;
-      background: radial-gradient(circle at top left, #0ea5e9, #020617);
-    }
-
-    .subtitle {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: radial-gradient(circle at top left, #111827, #020617);
-      color: #e5e7eb;
-      font-size: 11px;
-      white-space: nowrap;
-    }
-
-    .pill-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #22c55e, #16a34a);
-      box-shadow: 0 0 10px rgba(74, 222, 128, 0.9);
-    }
-
-    .pill-key {
-      padding: 1px 6px;
-      border-radius: 6px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      font-size: 10px;
-      color: #cbd5f5;
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    /* Filters */
-    .filters {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 10px;
-      margin-bottom: 16px;
-      align-items: center;
-    }
-
-    @media (max-width: 640px) {
-      .filters {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: radial-gradient(circle at top left, #020617, #020617);
-      border-radius: 999px;
-      padding: 4px 10px 4px 10px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
-    }
-
-    .search-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 0, #ffb4d6, #ffffff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #7c2d12;
-      font-size: 11px;
-    }
-
-    .search-input-wrap {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .search-input-wrap input {
-      flex: 1;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: var(--text);
-      font-size: 13px;
-      padding: 4px 0;
-    }
-
-    .search-input-wrap input::placeholder {
-      color: #6b7280;
-    }
-
-    .filter-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      justify-content: flex-end;
-    }
-
-    .tag {
-      border-radius: 999px;
-      font-size: 11px;
-      padding: 4px 9px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(255, 255, 255, 0.9);
-      color: #0f172a;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      opacity: 0.95;
-      transition: all 0.18s ease-out;
-    }
-
-    .tag span.dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 999px;
-      background: var(--accent);
-    }
-
-    .tag.active {
-      border-color: rgba(255, 95, 162, 0.65);
-      background: radial-gradient(circle at 0 0, rgba(255, 95, 162, 0.22), #ffffff);
-      color: #0f172a;
-      box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.14);
-      transform: translateY(-1px);
-    }
-
-    .tag:hover {
-      border-color: rgba(255, 95, 162, 0.55);
-      transform: translateY(-1px);
-    }
-
-    /* Content */
-    .content {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr);
-      gap: 14px;
-    }
-
-    @media (max-width: 900px) {
-      .content {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    /* Deals list */
-    .deals {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86));
-      border-radius: 18px;
-      padding: 12px 12px 6px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.09);
-      max-height: 460px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .deals-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-
-    .deals-header-left {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-
-    .deals-title {
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .deals-meta {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .deals-badge {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 95, 162, 0.35);
-      color: #7c2d12;
-      background: rgba(255, 255, 255, 0.92);
-    }
-
-    .deals-list {
-      margin: 0;
-      padding: 4px;
-      list-style: none;
-      overflow: auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 95, 162, 0.35) transparent;
-    }
-
-    .deals-list::-webkit-scrollbar {
-      width: 6px;
-    }
-    .deals-list::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .deals-list::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 95, 162, 0.35);
-      border-radius: 999px;
-    }
-
-    .deal-card {
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
-      gap: 6px;
-      padding: 12px 12px;
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background:
-        radial-gradient(circle at 10% 0%, rgba(255, 95, 162, 0.13), transparent 55%),
-        radial-gradient(circle at 90% 10%, rgba(56, 189, 248, 0.12), transparent 55%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.90));
-      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
-      margin-bottom: 10px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.18s ease-out, border-color 0.18s ease-out,
-        box-shadow 0.18s ease-out, background 0.18s ease-out;
-    }
-
-    .deal-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top left, rgba(255, 95, 162, 0.20), transparent 52%),
-        radial-gradient(circle at 70% 10%, rgba(56, 189, 248, 0.18), transparent 55%);
-      opacity: 0;
-      transition: opacity 0.18s ease-out;
-      pointer-events: none;
-    }
-
-    .deal-card:hover {
-      transform: translateY(-3px) rotate(-0.08deg);
-      border-color: rgba(255, 95, 162, 0.55);
-      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14);
-    }
-
-    .deal-card:hover::before {
-      opacity: 1;
-    }
-
-    .deal-card.selected {
-      border-color: rgba(56, 189, 248, 0.55);
-      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14),
-        0 0 0 4px rgba(56, 189, 248, 0.18);
-    }
-
-    .deal-main {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-width: 0;
-    }
-
-    .deal-title-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .deal-store {
-      font-size: 12px;
-      font-weight: 500;
-      color: #0f172a;
-    }
-
-    .deal-tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .deal-tag {
-      font-size: 10px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(255, 95, 162, 0.12);
-      color: #7c2d12;
-      border: 1px solid rgba(255, 95, 162, 0.25);
-    }
-
-    .deal-tag.secondary {
-      background: rgba(56, 189, 248, 0.14);
-      border-color: rgba(56, 189, 248, 0.26);
-      color: #075985;
-    }
-
-    .deal-tag.outline {
-      background: transparent;
-      border-color: rgba(75, 85, 99, 0.9);
-      color: #e5e7eb;
-    }
-
-    .deal-desc {
-      font-size: 11px;
-      color: #334155;
-      line-height: 1.5;
-    }
-
-    .deal-meta-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 3px;
-    }
-
-    .meta-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      color: var(--muted);
-    }
-
-    .meta-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 12px rgba(255, 95, 162, 0.45);
-    }
-
-    .meta-badge {
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(124, 58, 237, 0.22);
-      color: #5b21b6;
-      background: rgba(124, 58, 237, 0.08);
-      font-size: 10px;
-    }
-
-    .deal-side {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 4px;
-      text-align: right;
-    }
-
-    .saving {
-      font-size: 11px;
-      color: #6b7280;
-    }
-
-    .saving-amount {
-      font-size: 16px;
-      font-weight: 600;
-      color: #0f172a;
-    }
-
-    .btn-ghost {
-      border-radius: 999px;
-      padding: 4px 9px;
-      border: 1px solid rgba(255, 95, 162, 0.28);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), #ffffff);
-      color: #7c2d12;
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
-      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out,
-        border-color 0.18s ease-out;
-    }
-
-    .btn-ghost span.icon {
-      font-size: 12px;
-      transform: translateY(0.5px);
-    }
-
-    .btn-ghost:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255, 95, 162, 0.45);
-      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.1);
-    }
-
-    /* Sidebar / preview */
-    .side-panel {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86));
-      border-radius: 18px;
-      padding: 12px 12px 10px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.09);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 180px;
-    }
-
-    .side-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .side-title {
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .side-subtitle {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .deal-preview {
-      border-radius: 18px;
-      padding: 12px 12px 11px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      background:
-        radial-gradient(circle at 8% 0%, rgba(255, 95, 162, 0.12), transparent 55%),
-        radial-gradient(circle at 92% 8%, rgba(56, 189, 248, 0.12), transparent 55%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.9));
-      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.10);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .preview-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .preview-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #6b7280;
-    }
-
-    .preview-kicker .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(255, 95, 162, 0.95), rgba(255, 95, 162, 0.45));
-      box-shadow: 0 0 12px rgba(255, 95, 162, 0.35);
-      flex: 0 0 auto;
-    }
-
-    .preview-title {
-      font-size: 14px;
-      font-weight: 650;
-      letter-spacing: 0.01em;
-      color: #0f172a;
-      margin-top: 2px;
-    }
-
-    .preview-desc {
-      font-size: 12px;
-      color: #334155;
-      line-height: 1.55;
-      margin: 0;
-    }
-
-    .preview-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 8px;
-    }
-
-    .preview-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 10px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(255, 255, 255, 0.8);
-    }
-
-    .preview-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 95, 162, 0.12);
-      border: 1px solid rgba(255, 95, 162, 0.22);
-      color: #7c2d12;
-      flex: 0 0 auto;
-      font-size: 13px;
-    }
-
-    .preview-row strong {
-      display: block;
-      font-size: 11px;
-      color: #0f172a;
-      margin-bottom: 2px;
-      font-weight: 650;
-    }
-
-    .preview-row span {
-      display: block;
-      font-size: 11px;
-      color: #475569;
-      line-height: 1.5;
-    }
-
-    .preview-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .preview-note {
-      font-size: 10px;
-      color: #6b7280;
-    }
-
-    .preview-link {
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      background: rgba(56, 189, 248, 0.10);
-      color: #075985;
-      font-size: 11px;
-      font-weight: 600;
-      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
-      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out,
-        border-color 0.18s ease-out;
-    }
-
-    .preview-link:hover {
-      transform: translateY(-1px);
-      border-color: rgba(56, 189, 248, 0.55);
-      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.1);
-    }
-
-    .empty-hint {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    /* CSS 保持不變 */
+    :root { --bg: #fff7fb; --accent: #ff5fa2; --text: #4a4a4a; }
+    body { background: var(--bg); font-family: sans-serif; color: var(--text); margin: 0; }
+    .app { max-width: 1000px; margin: 0 auto; padding: 20px; }
+    .header { margin-bottom: 30px; }
+    .search-box { background: #white; border: 2px solid var(--accent); border-radius: 12px; padding: 10px; display: flex; align-items: center; margin-bottom: 15px; }
+    .search-box input { border: none; outline: none; width: 100%; font-size: 16px; margin-left: 10px; }
+    .filter-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .tag { padding: 6px 14px; border-radius: 20px; border: 1px solid #ddd; background: #fff; cursor: pointer; transition: 0.2s; }
+    .tag.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .content { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+    .deal-card { background: white; padding: 15px; border-radius: 12px; margin-bottom: 12px; cursor: pointer; border: 2px solid transparent; display: flex; justify-content: space-between; align-items: center; }
+    .deal-card.selected { border-color: var(--accent); background: #fff0f6; }
+    .deal-store { font-weight: bold; font-size: 14px; color: #888; }
+    .deal-tag { font-size: 18px; margin-top: 4px; font-weight: bold; }
+    .saving-amount { color: var(--accent); font-weight: bold; font-size: 16px; }
+    .side-panel { background: white; border-radius: 12px; padding: 20px; position: sticky; top: 20px; height: fit-content; min-height: 300px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .preview-title { font-size: 22px; font-weight: bold; margin-bottom: 15px; color: var(--accent); }
+    .preview-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; }
+    @media (max-width: 768px) { .content { grid-template-columns: 1fr; } .side-panel { position: static; } }
   </style>
 </head>
 <body>
   <div class="app">
     <header class="header">
-      <div class="logo-wrap">
-        <div class="logo-mark">
-          <div class="logo-inner">優惠</div>
-        </div>
-        <div class="title-block">
-          <div class="title-row">
-            <div class="title">優惠雷達聚合站</div>
-            <div class="chip-beta">DEMO</div>
-          </div>
-          <div class="subtitle">從各家官網優惠專區彙整資訊，一眼掌握最新好康。</div>
-        </div>
-      </div>
-      <div class="header-actions">
-        <div class="pill">
-          <span>⌘</span>
-          <span class="pill-key">K</span>
-          <span>指令搜尋（預留）</span>
-        </div>
-      </div>
+      <h1>優惠雷達聚合站</h1>
+      <p>您的專屬 GitHub 優惠實驗室</p>
     </header>
 
     <section class="filters">
       <div class="search-box">
-        <div class="search-icon">🔍</div>
-        <div class="search-input-wrap">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="搜尋店家、關鍵字或優惠內容…"
-          />
-        </div>
+        <span>🔍</span>
+        <input id="searchInput" type="text" placeholder="搜尋關鍵字..." />
       </div>
       <div class="filter-tags" id="typeFilters">
-        <button class="tag active" data-type="all">
-          全部
-        </button>
-        <button class="tag" data-type="student">
-          <span class="dot"></span>
-          學生優惠
-        </button>
-        <button class="tag" data-type="senior">
-          <span class="dot"></span>
-          敬老優惠
-        </button>
-        <button class="tag" data-type="birthday">
-          <span class="dot"></span>
-          生日/壽星
-        </button>
-        <button class="tag" data-type="anniversary">
-          <span class="dot"></span>
-          週年慶/檔期
-        </button>
+        <button class="tag active" data-type="all">全部</button>
+        <button class="tag" data-type="student">學生優惠</button>
+        <button class="tag" data-type="birthday">壽星</button>
       </div>
     </section>
 
-    <section class="content">
-      <div class="deals">
-        <div class="deals-header">
-          <div class="deals-header-left">
-            <div class="deals-title">精選優惠彙整</div>
-            <div class="deals-meta" id="dealsCountLabel">共 0 筆</div>
-          </div>
-          <span class="deals-badge">目前顯示之優惠以實際資料為準</span>
-        </div>
-        <ul class="deals-list" id="dealsList">
-          <!-- JS 注入卡片 -->
-        </ul>
-      </div>
-
-      <aside class="side-panel">
-        <div class="side-header">
-          <div>
-            <div class="side-title">優惠小卡預覽</div>
-            <div class="side-subtitle">點一下左邊的卡片，就能在這裡看到重點與連結。</div>
-          </div>
-          <div></div>
-        </div>
-
-        <div id="previewArea" class="deal-preview">
-          <div class="empty-hint">
-            還沒有選擇優惠。<br />
-            從左側挑一張喜歡的優惠卡片吧。
-          </div>
-        </div>
+    <div class="content">
+      <ul class="deals-list" id="dealsList"></ul>
+      <aside class="side-panel" id="previewArea">
+        <div class="empty-hint">選擇優惠查看詳情</div>
       </aside>
-    </section>
+    </div>
   </div>
 
   <script>
     const deals = [
-      {
-        id: 1,
-        store: "咖啡小屋",
-        title: "壽星當月：第二杯 5 折",
-        type: ["birthday"],
-        tags: ["咖啡飲品", "門市", "會員"],
-        description:
-          "壽星當月到店出示證件＋會員條碼，購買同品項兩杯飲品，第二杯享 5 折。",
-        period: "2026/03/01 ~ 2026/12/31",
-        limit: "每人每月限 1 次；部分季節限定品項不適用（以現場公告為準）。",
-        saving: "第二杯最高省下約 50%",
-        savingShort: "第二杯 5 折",
-        link: "https://www.example.com/",
-      },
-      {
-        id: 2,
-        store: "書香文具",
-        title: "學生持證：指定類別 9 折",
-        type: ["student"],
-        tags: ["文具書籍", "學生證", "常態"],
-        description:
-          "結帳時出示有效學生證，可享指定書籍/文具 9 折；特價品與部分品牌不參與。",
-        period: "長期（依門市公告）",
-        limit: "需本人出示證件；每筆交易限用一次；不與其他折扣併用。",
-        saving: "平均省下約 10%",
-        savingShort: "指定 9 折",
-        link: "https://www.example.com/",
-      },
-      {
-        id: 3,
-        store: "繽紛百貨",
-        title: "週年慶：滿額送＋卡友加碼",
-        type: ["anniversary"],
-        tags: ["週年慶", "滿額贈", "卡友回饋"],
-        description:
-          "活動期間累計消費達門檻即可兌換贈券；搭配指定銀行信用卡再享加碼回饋（以公告為準）。",
-        period: "2026/10/01 ~ 2026/10/31",
-        limit: "贈券/回饋名額有限；部分專櫃不適用；詳情依活動頁。",
-        saving: "常見組合：滿額送＋加碼回饋",
-        savingShort: "贈券＋加碼",
-        link: "https://www.example.com/",
-      },
-      {
-        id: 4,
-        store: "暖呼呼火鍋",
-        title: "敬老平日午餐：套餐 8 折",
-        type: ["senior"],
-        tags: ["火鍋", "敬老", "內用"],
-        description:
-          "年滿 65 歲長者於平日午餐時段內用，出示證件即可享單人套餐 8 折。",
-        period: "即日起 ~ 2026/06/30",
-        limit: "不含服務費；國定假日/特殊節日不適用；以門市公告為準。",
-        saving: "約省下 20%",
-        savingShort: "套餐 8 折",
-        link: "https://www.example.com/",
-      },
-      {
-        id: 5,
-        store: "喵喵影城",
-        title: "學生平日票：優惠價起",
-        type: ["student"],
-        tags: ["電影票", "學生證", "平日"],
-        description:
-          "平日觀賞一般 2D 場次，出示學生證可享學生票價；特殊影廳與熱門場次依現場公告。",
-        period: "常態（可能調整）",
-        limit: "入場需出示學生證；優惠不可與其他折扣併用。",
-        saving: "比原價更划算",
-        savingShort: "學生票更省",
-        link: "https://www.example.com/",
-      },
-      {
-        id: 6,
-        store: "甜甜茶飲",
-        title: "集點禮：10 點兌換飲品 1 杯",
-        type: ["birthday", "anniversary"],
-        tags: ["集點", "APP 會員", "兌換"],
-        description:
-          "加入會員後消費集點，集滿 10 點可兌換指定飲品 1 杯；點數與可兌品項依活動頁。",
-        period: "活動至 2026/12/31",
-        limit: "點數有期限；逾期失效；兌換品項可能隨檔期調整。",
-        saving: "集點越常喝越划算",
-        savingShort: "10 點換 1 杯",
-        link: "https://www.example.com/",
-      },
+      { id: 1, store: "咖啡屋", title: "買一送一", type: ["all"], description: "限時優惠...", savingShort: "50% OFF", link: "https://example.com" },
+      { id: 2, store: "學生食堂", title: "學生證 9 折", type: ["student"], description: "憑證件享優惠...", savingShort: "9 折", link: "https://example.com" }
     ];
-
-    const searchInput = document.getElementById("searchInput");
-    const dealsList = document.getElementById("dealsList");
-    const dealsCountLabel = document.getElementById("dealsCountLabel");
-    const typeFilters = document.getElementById("typeFilters");
-    const previewArea = document.getElementById("previewArea");
 
     let activeType = "all";
     let activeDealId = null;
+    let searchTimer = null;
 
     function renderDeals() {
-      const keyword = searchInput.value.trim().toLowerCase();
+      const list = document.getElementById("dealsList");
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+      
+      const filtered = deals.filter(d => 
+        (activeType === "all" || d.type.includes(activeType)) &&
+        (d.store.includes(keyword) || d.title.includes(keyword))
+      );
 
-      const filtered = deals.filter((deal) => {
-        if (activeType !== "all" && !deal.type.includes(activeType)) {
-          return false;
-        }
-        if (!keyword) return true;
-
-        const bundle = [
-          deal.store,
-          deal.title,
-          deal.description,
-          deal.limit,
-          ...(deal.tags || []),
-        ]
-          .join(" ")
-          .toLowerCase();
-
-        return bundle.includes(keyword);
-      });
-
-      dealsCountLabel.textContent = `共 ${filtered.length} 筆`;
-
-      dealsList.innerHTML = "";
-
-      if (!filtered.length) {
-        const li = document.createElement("li");
-        li.innerHTML =
-          '<div class="deal-card"><div class="deal-main"><div class="deal-desc">找不到符合條件的優惠，試試移除篩選或換個關鍵字。</div></div></div>';
-        dealsList.appendChild(li);
-        previewArea.innerHTML =
-          '<div class="empty-hint">目前篩選條件下沒有資料。<br />這裡將在你選擇優惠卡片後，顯示詳細說明與連結。</div>';
-        activeDealId = null;
-        return;
-      }
-
-      filtered.forEach((deal, index) => {
-        const li = document.createElement("li");
-
-        const isActive = activeDealId === deal.id || (activeDealId == null && index === 0);
-        if (activeDealId == null && index === 0) {
-          activeDealId = deal.id;
-          renderPreview(deal);
-        }
-
-        li.innerHTML = `
-          <article class="deal-card" data-id="${deal.id}">
-            <div class="deal-main">
-              <div class="deal-title-row">
-                <div class="deal-store">${deal.store}</div>
-              </div>
-              <div class="deal-tag-row">
-                <span class="deal-tag">${deal.title}</span>
-                ${deal.type
-                  .map((t) => {
-                    const map = {
-                      student: "學生",
-                      senior: "敬老",
-                      birthday: "壽星",
-                      anniversary: "週年慶",
-                    };
-                    return `<span class="deal-tag secondary">${map[t] || t}</span>`;
-                  })
-                  .join("")}
-              </div>
-              <p class="deal-desc">${deal.description}</p>
-              <div class="deal-meta-row">
-                <span class="meta-item">
-                  <span class="meta-dot"></span>
-                  ${deal.period}
-                </span>
-                <span class="meta-badge">使用前請再確認官網公告</span>
-              </div>
-            </div>
-            <div class="deal-side">
-              <div>
-                <div class="saving">估計可省</div>
-                <div class="saving-amount">${deal.savingShort}</div>
-              </div>
-              <button class="btn-ghost" type="button">
-                <span class="icon">↗</span>
-                <span>查看詳情</span>
-              </button>
-            </div>
-          </article>
-        `;
-
-        if (isActive) {
-          li.querySelector(".deal-card").classList.add("selected");
-        }
-
-        dealsList.appendChild(li);
-      });
-    }
-
-    function renderPreview(deal) {
-      previewArea.innerHTML = `
-        <div class="preview-top">
+      list.innerHTML = filtered.map(d => `
+        <li class="deal-card ${activeDealId === d.id ? 'selected' : ''}" onclick="selectDeal(${d.id})">
           <div>
-            <div class="preview-kicker"><span class="dot"></span>${deal.store}</div>
-            <div class="preview-title">${deal.title}</div>
+            <div class="deal-store">${d.store}</div>
+            <div class="deal-tag">${d.title}</div>
           </div>
-        </div>
-
-        <p class="preview-desc">${deal.description}</p>
-
-        <div class="preview-grid">
-          <div class="preview-row">
-            <div class="preview-icon">⏰</div>
-            <div>
-              <strong>活動期間</strong>
-              <span>${deal.period}</span>
-            </div>
-          </div>
-          <div class="preview-row">
-            <div class="preview-icon">🎀</div>
-            <div>
-              <strong>估計可省</strong>
-              <span>${deal.saving}</span>
-            </div>
-          </div>
-          <div class="preview-row">
-            <div class="preview-icon">🧾</div>
-            <div>
-              <strong>使用限制</strong>
-              <span>${deal.limit}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="preview-actions">
-          <div class="preview-note">實際優惠內容與條件以商家官網公告為準。</div>
-          <a href="${deal.link}" target="_blank" rel="noreferrer" class="preview-link">
-            前往官方優惠頁 <span class="icon">↗</span>
-          </a>
-        </div>
-      `;
+          <div class="saving-amount">${d.savingShort}</div>
+        </li>
+      `).join("");
     }
 
-    // 事件綁定
-    searchInput.addEventListener("input", () => {
-      activeDealId = null;
-      renderDeals();
-    });
-
-    typeFilters.addEventListener("click", (e) => {
-      const btn = e.target.closest(".tag");
-      if (!btn) return;
-
-      const type = btn.dataset.type;
-      if (!type) return;
-
-      activeType = type;
-      activeDealId = null;
-
-      [...typeFilters.querySelectorAll(".tag")].forEach((el) =>
-        el.classList.toggle("active", el === btn)
-      );
-
-      renderDeals();
-    });
-
-    dealsList.addEventListener("click", (e) => {
-      const card = e.target.closest(".deal-card");
-      if (!card) return;
-
-      const id = Number(card.dataset.id);
-      const deal = deals.find((d) => d.id === id);
-      if (!deal) return;
-
+    function selectDeal(id) {
       activeDealId = id;
-      renderPreview(deal);
+      const deal = deals.find(d => d.id === id);
+      const preview = document.getElementById("previewArea");
+      preview.innerHTML = `
+        <div class="preview-title">${deal.title}</div>
+        <p>${deal.description}</p>
+        <a href="${deal.link}" class="preview-link" onclick="trackConversion(${id})">前往官網 ↗</a>
+      `;
+      renderDeals();
 
-      [...dealsList.querySelectorAll(".deal-card")].forEach((el) => {
-        el.classList.remove("selected");
+      // 埋點：點擊卡片
+      window.collectEvent("deal_card_click", {
+        deal_id: id,
+        deal_store: deal.store,
+        filter_context: activeType
       });
-      card.classList.add("selected");
+    }
+
+    function trackConversion(id) {
+      // 埋點：轉化跳轉
+      window.collectEvent("conversion_click", {
+        deal_id: id,
+        source: "github_main_page"
+      });
+    }
+
+    // 搜尋防抖埋點
+    document.getElementById("searchInput").addEventListener("input", () => {
+      renderDeals();
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        const val = document.getElementById("searchInput").value;
+        if(val) window.collectEvent("search_action", { keyword: val });
+      }, 1000);
     });
 
-    // 初始化
+    // 分類篩選埋點
+    document.getElementById("typeFilters").addEventListener("click", (e) => {
+      if(e.target.classList.contains("tag")) {
+        activeType = e.target.dataset.type;
+        document.querySelectorAll(".tag").forEach(t => t.classList.remove("active"));
+        e.target.classList.add("active");
+        renderDeals();
+        window.collectEvent("filter_change", { category: activeType });
+      }
+    });
+
     renderDeals();
-
-    // =============================================
-    // 行為事件上報
-    // =============================================
-    (function setupAnalyticsEvents() {
-      if (!window.collectEvent) return;
-
-      var baseParams = function () {
-        return {
-          page_title: document.title,
-          page_url: window.location.href,
-        };
-      };
-
-      // ----- 1) bav2b_page：頁面瀏覽（PV）-----
-      // SDK autotrack 會自動發 predefine_pageview，這裡額外手動上報 bav2b_page
-      window.collectEvent("bav2b_page", baseParams());
-
-      // ----- 2) $bav2b_page_leave：使用者離開頁面（切到背景 or 導航離開）-----
-      // 使用 visibilitychange 偵測切到背景
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) {
-          window.collectEvent("$bav2b_page_leave", baseParams());
-        }
-      });
-
-      // ----- 3) predefine_page_close：關頁/重整/離開 -----
-      var isIOS =
-        navigator.userAgent.indexOf("iPhone") !== -1 ||
-        navigator.userAgent.indexOf("iPad") !== -1 ||
-        navigator.userAgent.indexOf("Mac OS X") !== -1;
-
-      window.addEventListener(
-        isIOS ? "pagehide" : "beforeunload",
-        function () {
-          window.collectEvent("predefine_page_close", baseParams());
-        },
-        false
-      );
-
-      // ----- 4) predefine_pageview_hide：頁面被隱藏（最小化/切分頁）-----
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) {
-          window.collectEvent("predefine_pageview_hide", baseParams());
-        }
-      });
-
-      // ----- 5) bav2b_click：點擊互動（只抓常見可互動元素）-----
-      document.addEventListener(
-        "click",
-        function (e) {
-          var el =
-            e.target && e.target.closest
-              ? e.target.closest("a,button,.deal-card,.tag")
-              : null;
-          if (!el) return;
-
-          var text = (el.innerText || "").trim().slice(0, 80);
-          var href = el.tagName === "A" ? el.getAttribute("href") : null;
-          var dealId = el.classList.contains("deal-card")
-            ? Number(el.dataset.id || 0)
-            : null;
-          var deal = dealId ? deals.find(function (d) { return d.id === dealId; }) : null;
-
-          window.collectEvent("bav2b_click", {
-            page_title: document.title,
-            page_url: window.location.href,
-            element_tag: el.tagName ? el.tagName.toLowerCase() : "unknown",
-            element_text: text,
-            element_href: href,
-            element_url: href || undefined,
-            deal_id: dealId || undefined,
-            deal_link: deal ? deal.link : undefined,
-          });
-        },
-        { capture: true }
-      );
-
-      // ----- 6) $bav2b_exposure：卡片曝光（每次進出視窗都上報）-----
-      var visibilityByDealId = new Map();
-      var exposureObserver = null;
-
-      var observeExposures = function () {
-        var cards = document.querySelectorAll(".deal-card[data-id]");
-        if (!cards.length) return;
-
-        if (!("IntersectionObserver" in window)) return;
-
-        if (exposureObserver) exposureObserver.disconnect();
-
-        exposureObserver = new IntersectionObserver(
-          function (entries) {
-            entries.forEach(function (entry) {
-              var target = entry.target;
-              var id = Number(target.dataset.id || 0);
-              if (!id) return;
-
-              var prevVisible = visibilityByDealId.get(id) === true;
-              var nextVisible = entry.isIntersecting === true;
-              if (prevVisible === nextVisible) return;
-              visibilityByDealId.set(id, nextVisible);
-
-              var deal = deals.find(function (d) { return d.id === id; });
-              window.collectEvent("$bav2b_exposure", {
-                page_title: document.title,
-                page_url: window.location.href,
-                exposure_type: "deal_card",
-                exposure_state: nextVisible ? "enter" : "leave",
-                deal_id: id,
-                deal_store: deal ? deal.store : undefined,
-                deal_title: deal ? deal.title : undefined,
-                deal_link: deal ? deal.link : undefined,
-              });
-            });
-          },
-          { root: null, threshold: 0.6 }
-        );
-
-        cards.forEach(function (c) {
-          exposureObserver.observe(c);
-        });
-      };
-
-      // 初次渲染後監聽一次；之後每次重新渲染列表再補監聽
-      observeExposures();
-      var _renderDeals = renderDeals;
-      renderDeals = function () {
-        _renderDeals();
-        observeExposures();
-      };
-    })();
   </script>
 </body>
 </html>
