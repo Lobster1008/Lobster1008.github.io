@@ -32,8 +32,9 @@
       };
 
       function startSdk() {
+        // SaaS 雲原生：用 APP Url 作為 app_id 初始化（避免 invalid appid）
         window.collectEvent("init", {
-          app_id: window.RANGERS_SDK_CONFIG.app_id,
+          app_id: window.RANGERS_SDK_CONFIG.app_url,
           channel_domain: window.RANGERS_SDK_CONFIG.channel_domain,
           disable_sdk_monitor: window.RANGERS_SDK_CONFIG.disable_sdk_monitor,
           autotrack: window.RANGERS_SDK_CONFIG.autotrack,
