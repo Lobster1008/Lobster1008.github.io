@@ -21,36 +21,65 @@
         query.get("open_dev_tool") === "true" ||
         query.get("open_dev_tool_web") === "true";
 
+      // 你的控制台為 BytePlus（console.byteplus.com），預設用海外 channel: sg
+      // 其他環境可用網址參數切換：?env=cn 或 ?env=private
+      var env = query.get("env") || "byteplus";
+
       window.RANGERS_SDK_CONFIG = {
         app_id: 20004082,
         app_url: "rangers://0861e28bae77c708944b1e03ea53aa21/MjAwMDQwODI=",
-        channel_domain: "https://gator.volces.com",
+        platform: "BytePlus DataFinder",
+        project_console:
+          "https://console.byteplus.com/datafinder/project/2849479/project/detail",
         disable_sdk_monitor: true,
         autotrack: true,
         log: true,
         enable_debug: openDebug,
       };
 
+      var initOptions = {
+        app_id: window.RANGERS_SDK_CONFIG.app_id,
+        disable_sdk_monitor: window.RANGERS_SDK_CONFIG.disable_sdk_monitor,
+        autotrack: window.RANGERS_SDK_CONFIG.autotrack,
+        log: window.RANGERS_SDK_CONFIG.log,
+        enable_debug: window.RANGERS_SDK_CONFIG.enable_debug,
+      };
+
+      var sdkSrc =
+        "https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-rangers-v5.2.11.js";
+
+      if (env === "cn") {
+        initOptions.channel_domain = "https://gator.volces.com";
+        window.RANGERS_SDK_CONFIG.report_mode = "火山引擎 SaaS 華北";
+      } else if (env === "private") {
+        initOptions.channel_domain =
+          query.get("channel_domain") || "https://ma.altatech.tw";
+        sdkSrc =
+          "https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-privity-v5.2.6.js";
+        window.RANGERS_SDK_CONFIG.report_mode = "私有化";
+      } else {
+        // BytePlus 海外（文件：channel: sg，勿用国内 gator.volces.com）
+        initOptions.channel = "sg";
+        if (query.get("channel_domain")) {
+          initOptions.channel_domain = query.get("channel_domain");
+        }
+        window.RANGERS_SDK_CONFIG.report_mode = "BytePlus 海外 (channel: sg)";
+      }
+
+      window.RANGERS_SDK_CONFIG.init_options = initOptions;
+
       function startSdk() {
-        // SaaS 雲原生：用 APP Url 作為 app_id 初始化（避免 invalid appid）
-        window.collectEvent("init", {
-          app_id: window.RANGERS_SDK_CONFIG.app_url,
-          channel_domain: window.RANGERS_SDK_CONFIG.channel_domain,
-          disable_sdk_monitor: window.RANGERS_SDK_CONFIG.disable_sdk_monitor,
-          autotrack: window.RANGERS_SDK_CONFIG.autotrack,
-          log: window.RANGERS_SDK_CONFIG.log,
-          enable_debug: window.RANGERS_SDK_CONFIG.enable_debug,
-        });
+        window.collectEvent("init", initOptions);
         window.collectEvent("start");
+        console.info("[Rangers] init 完成", initOptions);
       }
 
       var sdk = document.createElement("script");
       sdk.async = true;
-      sdk.src =
-        "https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-rangers-v5.2.11.js";
+      sdk.src = sdkSrc;
       sdk.onload = startSdk;
       sdk.onerror = function () {
-        console.error("[Rangers SDK] 主檔載入失敗，請檢查網路或改用本機 http 開啟頁面");
+        console.error("[Rangers SDK] 主檔載入失敗");
       };
       document.head.appendChild(sdk);
     })();
