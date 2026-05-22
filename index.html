@@ -3,7 +3,7 @@
 <head>
   <script>
     (function (win, export_obj) {
-      win["TeaAnalyticsObject"] = export_obj;
+      win["LogAnalyticsObject"] = export_obj;
       if (!win[export_obj]) {
         function _collect() {
           _collect.q.push(arguments);
@@ -14,18 +14,45 @@
       win[export_obj].l = +new Date();
     })(window, "collectEvent");
   </script>
-  <script
-    async
-    src="https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-privity-v5.2.6.js"
-  ></script>
   <script>
-    window.collectEvent("init", {
-      app_id: 10000047,
-      channel_domain: "https://cdp.altatech.tw", // 替换为私有部署部署服务地址
-      disable_sdk_monitor: true, // 用于禁止SDK启动后自身监控事件 onload 的上报
-      autotrack: true, // 開啟全埋點
-    });
-    window.collectEvent("start");
+    (function bootRangersSdk() {
+      var query = new URLSearchParams(window.location.search);
+      var openDebug =
+        query.get("open_dev_tool") === "true" ||
+        query.get("open_dev_tool_web") === "true";
+
+      window.RANGERS_SDK_CONFIG = {
+        app_id: 20004082,
+        app_url: "rangers://0861e28bae77c708944b1e03ea53aa21/MjAwMDQwODI=",
+        channel_domain: "https://gator.volces.com",
+        disable_sdk_monitor: true,
+        autotrack: true,
+        log: true,
+        enable_debug: openDebug,
+      };
+
+      function startSdk() {
+        window.collectEvent("init", {
+          app_id: window.RANGERS_SDK_CONFIG.app_id,
+          channel_domain: window.RANGERS_SDK_CONFIG.channel_domain,
+          disable_sdk_monitor: window.RANGERS_SDK_CONFIG.disable_sdk_monitor,
+          autotrack: window.RANGERS_SDK_CONFIG.autotrack,
+          log: window.RANGERS_SDK_CONFIG.log,
+          enable_debug: window.RANGERS_SDK_CONFIG.enable_debug,
+        });
+        window.collectEvent("start");
+      }
+
+      var sdk = document.createElement("script");
+      sdk.async = true;
+      sdk.src =
+        "https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-rangers-v5.2.11.js";
+      sdk.onload = startSdk;
+      sdk.onerror = function () {
+        console.error("[Rangers SDK] 主檔載入失敗，請檢查網路或改用本機 http 開啟頁面");
+      };
+      document.head.appendChild(sdk);
+    })();
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -1104,60 +1131,38 @@
     // 初始化
     renderDeals();
 
-    // 行為事件上報（你指定的事件名）
+    // 自訂埋點補充（PV / 點擊由 SDK 自動上報；params 僅放業務欄位，避免 400）
     (function setupAnalyticsEvents() {
       if (!window.collectEvent) return;
 
-      const baseParams = () => ({
-        page_title: document.title,
-        page_url: window.location.href,
-      });
+      function eventParams(extra) {
+        var params = {
+          url: window.location.href,
+          page_title: document.title,
+        };
+        if (!extra) return params;
+        Object.keys(extra).forEach(function (key) {
+          var val = extra[key];
+          if (val !== undefined && val !== null && val !== "") {
+            params[key] = val;
+          }
+        });
+        return params;
+      }
 
-      // 1) predefine_pageview：通常 SDK 會自動上報（預置 PV）
-      // 這裡不重複手動上報，避免你看到兩筆 PV。
+      // predefine_pageview、bav2b_click：SDK / autotrack 自動上報
 
-      // 2) predefine_page_close：關頁/重整/離開
       window.addEventListener("beforeunload", function () {
-        window.collectEvent("predefine_page_close", baseParams());
+        window.collectEvent("predefine_page_close", eventParams());
       });
 
-      // 3) predefine_pageview_hide：切到背景/最小化（頁面被隱藏）
       document.addEventListener("visibilitychange", function () {
         if (document.hidden) {
-          window.collectEvent("predefine_pageview_hide", baseParams());
+          window.collectEvent("predefine_pageview_hide", eventParams());
         }
       });
 
-      // 4) bav2b_click：點擊互動（只抓常見可互動元素）
-      document.addEventListener(
-        "click",
-        function (e) {
-          const el = e.target && e.target.closest
-            ? e.target.closest("a,button,.deal-card,.tag")
-            : null;
-          if (!el) return;
-
-          const text = (el.innerText || "").trim().slice(0, 80);
-          const href = el.tagName === "A" ? el.getAttribute("href") : null;
-          const dealId = el.classList.contains("deal-card")
-            ? Number(el.dataset.id || 0)
-            : null;
-          const deal = dealId ? deals.find((d) => d.id === dealId) : null;
-
-          window.collectEvent("bav2b_click", {
-            ...baseParams(),
-            element_tag: el.tagName ? el.tagName.toLowerCase() : "unknown",
-            element_text: text,
-            element_href: href,
-            element_url: href || undefined,
-            deal_id: dealId || undefined,
-            deal_link: deal ? deal.link : undefined,
-          });
-        },
-        { capture: true }
-      );
-
-      // 5) $bav2b_exposure：卡片曝光（每次進出視窗都上報）
+      // $bav2b_exposure：優惠卡片曝光
       const visibilityByDealId = new Map();
       let exposureObserver = null;
       const observeExposures = () => {
@@ -1181,15 +1186,14 @@
               visibilityByDealId.set(id, nextVisible);
 
               const deal = deals.find((d) => d.id === id);
-              window.collectEvent("$bav2b_exposure", {
-                ...baseParams(),
+              window.collectEvent("$bav2b_exposure", eventParams({
                 exposure_type: "deal_card",
                 exposure_state: nextVisible ? "enter" : "leave",
-                deal_id: id,
-                deal_store: deal ? deal.store : undefined,
-                deal_title: deal ? deal.title : undefined,
-                deal_link: deal ? deal.link : undefined,
-              });
+                deal_id: String(id),
+                deal_store: deal ? deal.store : "",
+                deal_title: deal ? deal.title : "",
+                deal_link: deal ? deal.link : "",
+              }));
             });
           },
           { root: null, threshold: 0.6 }
