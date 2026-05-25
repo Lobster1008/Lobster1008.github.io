@@ -21,6 +21,19 @@
         query.get("open_dev_tool") === "true" ||
         query.get("open_dev_tool_web") === "true";
 
+      /**
+       * 環境說明（對應 SDK 文件「獲取上報地址」章節）：
+       *   預設（無 env 參數）→ SaaS-云原生 华北2-北京：channel_domain gator.volces.com
+       *   ?env=sg            → SaaS-非云原生 海外 BytePlus（新加坡）：channel: 'sg'
+       *   ?env=private       → 私有化環境：需額外設 channel_domain
+       *
+       * ⚠️ 修正說明（對照原始代碼）：
+       *   1. 移除 app_url（非 SDK init 標準欄位，和 app_id 只能擇一）
+       *   2. 預設環境從 channel:'sg'（海外）改為 channel_domain:gator.volces.com（SaaS-云原生华北）
+       *      → 這是資料「數據未接入」的主因
+       *   3. env 切換參數重新命名（byteplus→sg）使其意義明確
+       */
+
       var env = query.get("env") || "sg"; // 預設 BytePlus 海外（SG）
 
       // 本地開發參考用，不傳入 SDK init
@@ -49,13 +62,13 @@
 
       if (env === "cn_saas") {
         // 华北2-北京（本專案正式環境）
-        initOptions.channel_domain = "https://mcs.tobsnssdk.com";
+        initOptions.channel_domain = "https://gator.volces.com";
         window.RANGERS_SDK_CONFIG.report_mode = "华北2-北京 (gator.volces.com)";
       } else if (env === "sg") {
-        // 目前測試設定：channel cn + gator.volces.com
+        // 目前測試設定：channel cn + mcs.tobsnssdk.com
         initOptions.channel = "cn";
-        initOptions.channel_domain = "https://gator.volces.com";
-        window.RANGERS_SDK_CONFIG.report_mode = "channel: cn + gator.volces.com";
+        initOptions.channel_domain = "https://mcs.tobsnssdk.com";
+        window.RANGERS_SDK_CONFIG.report_mode = "channel: cn + mcs.tobsnssdk.com";
       } else if (env === "private") {
         // 私有化
         initOptions.channel_domain =
