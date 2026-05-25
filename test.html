@@ -65,10 +65,9 @@
         initOptions.channel_domain = "https://gator.volces.com";
         window.RANGERS_SDK_CONFIG.report_mode = "华北2-北京 (gator.volces.com)";
       } else if (env === "sg") {
-        // 測試：channel:cn + gator.uba.ap-southeast-1.volces.com
-        initOptions.channel = "cn";
+        // 測試：只設 channel_domain，不設 channel
         initOptions.channel_domain = "https://gator.uba.ap-southeast-1.volces.com";
-        window.RANGERS_SDK_CONFIG.report_mode = "channel:cn + gator.uba.ap-southeast-1.volces.com";
+        window.RANGERS_SDK_CONFIG.report_mode = "gator.uba.ap-southeast-1.volces.com";
       } else if (env === "private") {
         // 私有化
         initOptions.channel_domain =
