@@ -34,7 +34,7 @@
        *   3. env 切換參數重新命名（byteplus→sg）使其意義明確
        */
 
-      var env = query.get("env") || "sg"; // 預設 BytePlus 海外（SG channel）
+      var env = query.get("env") || "cn_saas"; // 預設 华北2-北京
 
       // 本地開發參考用，不傳入 SDK init
       window.RANGERS_SDK_CONFIG = {
@@ -61,9 +61,9 @@
         "https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-rangers-v5.2.11.js";
 
       if (env === "cn_saas") {
-        // 火山引擎 SaaS-云原生 华北（備用，非本專案環境）
+        // 华北2-北京（本專案正式環境）
         initOptions.channel_domain = "https://gator.volces.com";
-        window.RANGERS_SDK_CONFIG.report_mode = "火山引擎 SaaS-云原生 华北";
+        window.RANGERS_SDK_CONFIG.report_mode = "华北2-北京 (gator.volces.com)";
       } else if (env === "sg") {
         // SaaS-非云原生 海外 BytePlus（新加坡）
         initOptions.channel = "sg";
