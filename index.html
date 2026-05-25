@@ -34,11 +34,11 @@
        *   3. env 切換參數重新命名（byteplus→sg）使其意義明確
        */
 
-      var env = query.get("env") || "cn_saas"; // 預設 华北2-北京
+      var env = query.get("env") || "sg"; // 預設 BytePlus 海外（SG）
 
       // 本地開發參考用，不傳入 SDK init
       window.RANGERS_SDK_CONFIG = {
-        app_id: 15001,
+        app_id: 20004082,
         platform: "BytePlus DataFinder",
         project_console:
           "https://console.byteplus.com/datafinder/project/2849479/project/detail",
@@ -65,11 +65,9 @@
         initOptions.channel_domain = "https://gator.volces.com";
         window.RANGERS_SDK_CONFIG.report_mode = "华北2-北京 (gator.volces.com)";
       } else if (env === "sg") {
-        // SaaS-非云原生 海外 BytePlus（新加坡）
+        // BytePlus 海外（新加坡）：channel + channel_domain 兩個都要設
         initOptions.channel = "sg";
-        if (query.get("channel_domain")) {
-          initOptions.channel_domain = query.get("channel_domain");
-        }
+        initOptions.channel_domain = "https://mcs.tobsnssdk.com";
         window.RANGERS_SDK_CONFIG.report_mode = "BytePlus 海外 (channel: sg)";
       } else if (env === "private") {
         // 私有化
