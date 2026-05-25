@@ -38,7 +38,7 @@
 
       // 本地開發參考用，不傳入 SDK init
       window.RANGERS_SDK_CONFIG = {
-        app_id: 20004082,
+        app_id: "rangers://0861e28bae77c708944b1e03ea53aa21/MjAwMDQwODI=",
         platform: "BytePlus DataFinder",
         project_console:
           "https://console.byteplus.com/datafinder/project/2849479/project/detail",
@@ -67,8 +67,8 @@
       } else if (env === "sg") {
         // 目前測試設定：channel cn + mcs.tobsnssdk.com
         initOptions.channel = "cn";
-        initOptions.channel_domain = "https://mcs.tobsnssdk.com";
-        window.RANGERS_SDK_CONFIG.report_mode = "channel: cn + mcs.tobsnssdk.com";
+        initOptions.channel_domain = "https://gator.volces.com";
+        window.RANGERS_SDK_CONFIG.report_mode = "BytePlus SG + APP Url";
       } else if (env === "private") {
         // 私有化
         initOptions.channel_domain =
