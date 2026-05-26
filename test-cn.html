@@ -21,24 +21,11 @@
         query.get("open_dev_tool") === "true" ||
         query.get("open_dev_tool_web") === "true";
 
-      /**
-       * 環境說明（對應 SDK 文件「獲取上報地址」章節）：
-       *   預設（無 env 參數）→ SaaS-云原生 华北2-北京：channel_domain gator.volces.com
-       *   ?env=sg            → SaaS-非云原生 海外 BytePlus（新加坡）：channel: 'sg'
-       *   ?env=private       → 私有化環境：需額外設 channel_domain
-       *
-       * ⚠️ 修正說明（對照原始代碼）：
-       *   1. 移除 app_url（非 SDK init 標準欄位，和 app_id 只能擇一）
-       *   2. 預設環境從 channel:'sg'（海外）改為 channel_domain:gator.volces.com（SaaS-云原生华北）
-       *      → 這是資料「數據未接入」的主因
-       *   3. env 切換參數重新命名（byteplus→sg）使其意義明確
-       */
-
-      var env = query.get("env") || "sg"; // 預設 BytePlus SaaS-云原生 (channel: sg)
+      var env = query.get("env") || "cn_saas"; // 預設 cn_saas → gator.volces.com
 
       // 本地開發參考用，不傳入 SDK init
       window.RANGERS_SDK_CONFIG = {
-        app_id:20004082,
+        app_id: 20004082,
         platform: "BytePlus DataFinder",
         project_console:
           "https://console.byteplus.com/datafinder/project/2849479/project/detail",
@@ -50,7 +37,7 @@
 
       // 傳入 SDK init 的參數（只放 SDK 文件明確支援的欄位）
       var initOptions = {
-        app_id:window.RANGERS_SDK_CONFIG.app_id,
+        app_id: window.RANGERS_SDK_CONFIG.app_id,
         disable_sdk_monitor: window.RANGERS_SDK_CONFIG.disable_sdk_monitor,
         autotrack: window.RANGERS_SDK_CONFIG.autotrack,
         log: window.RANGERS_SDK_CONFIG.log,
@@ -65,9 +52,9 @@
         initOptions.channel_domain = "https://gator.volces.com";
         window.RANGERS_SDK_CONFIG.report_mode = "华北2-北京 (gator.volces.com)";
       } else if (env === "sg") {
-        // 測試：只設 channel_domain，不設 channel
-        initOptions.channel_domain = "https://gator.volces.com";
-        window.RANGERS_SDK_CONFIG.report_mode = "gator.volces.com";
+        // BytePlus SaaS-非云原生 SG
+        initOptions.channel = "sg";
+        window.RANGERS_SDK_CONFIG.report_mode = "BytePlus SG (channel: sg)";
       } else if (env === "private") {
         // 私有化
         initOptions.channel_domain =
