@@ -25,7 +25,7 @@
 
       // 本地開發參考用，不傳入 SDK init
       window.RANGERS_SDK_CONFIG = {
-        app_id:20004082,
+        app_id:20000341,
         platform: "BytePlus DataFinder",
         project_console:
           "https://console.byteplus.com/datafinder/project/2849479/project/detail",
@@ -49,8 +49,8 @@
 
       if (env === "cn_saas") {
         // 华北2-北京（本專案正式環境）
-        initOptions.channel_domain = "https://gator.volces.com";
-        window.RANGERS_SDK_CONFIG.report_mode = "华北2-北京 (gator.volces.com)";
+        initOptions.channel_domain = "https://gator.uba.ap-southeast-1.bytepluses.com";
+        window.RANGERS_SDK_CONFIG.report_mode = "华北2-北京 (https://gator.uba.ap-southeast-1.bytepluses.com)";
       } else if (env === "sg") {
         // BytePlus SaaS-非云原生 SG
         initOptions.channel = "sg";
