@@ -21,53 +21,25 @@
         query.get("open_dev_tool") === "true" ||
         query.get("open_dev_tool_web") === "true";
 
-      var env = query.get("env") || "cn_saas"; // 預設 cn_saas → gator.uba.ap-southeast-1.volces.com
-
-      // 本地開發參考用，不傳入 SDK init
-      window.RANGERS_SDK_CONFIG = {
-        app_id:20004082,
-        platform: "BytePlus DataFinder",
-        project_console:
-          "https://console.byteplus.com/datafinder/project/2849479/project/detail",
+      var initOptions = {
+        app_id: 20004082,
+        channel_domain: "https://gator.uba.ap-southeast-1.volces.com",
         disable_sdk_monitor: true,
         autotrack: true,
         log: true,
         enable_debug: openDebug,
       };
 
-      // 傳入 SDK init 的參數（只放 SDK 文件明確支援的欄位）
-      var initOptions = {
-        app_id:window.RANGERS_SDK_CONFIG.app_id,
-        disable_sdk_monitor: window.RANGERS_SDK_CONFIG.disable_sdk_monitor,
-        autotrack: window.RANGERS_SDK_CONFIG.autotrack,
-        log: window.RANGERS_SDK_CONFIG.log,
-        enable_debug: window.RANGERS_SDK_CONFIG.enable_debug,
-      };
-
       var sdkSrc =
         "https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-rangers-v5.2.11.js";
 
-      if (env === "cn_saas") {
-        // 华北2-北京（本專案正式環境）
-        initOptions.channel_domain = "https://gator.uba.ap-southeast-1.bytepluses.com";
-        window.RANGERS_SDK_CONFIG.report_mode = "cn_saas (gator.uba.ap-southeast-1.bytepluses.com)";
-      } else if (env === "sg") {
-        // BytePlus SaaS-非云原生 SG
-        initOptions.channel = "sg";
-        window.RANGERS_SDK_CONFIG.report_mode = "BytePlus SG (channel: sg)";
-      } else if (env === "private") {
-        // 私有化
-        initOptions.channel_domain =
-          query.get("channel_domain") || "https://ma.altatech.tw";
-        sdkSrc =
-          "https://lf3-data.volccdn.com/obj/data-static/log-sdk/collect/5.0/collect-privity-v5.2.6.js";
-        window.RANGERS_SDK_CONFIG.report_mode = "私有化";
-      }
-
-      window.RANGERS_SDK_CONFIG.init_options = initOptions;
+      window.RANGERS_SDK_CONFIG = { init_options: initOptions };
 
       function startSdk() {
         window.collectEvent("init", initOptions);
+        window.collectEvent("config", {
+          url: window.location.href,
+        });
         window.collectEvent("start");
         console.info("[Rangers] init 完成", initOptions);
       }
