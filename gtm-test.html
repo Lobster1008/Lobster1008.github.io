@@ -13,46 +13,14 @@
   <title>優惠彙整小站</title>
   <style>
     :root {
-      --bg: #fff7fb;
-      --bg-soft: #fff1f8;
-      --card: #ffffff;
-      --accent: #ff5fa2;
-      --accent-soft: rgba(255, 95, 162, 0.16);
-      --text: #0f172a;
-      --muted: #6b7280;
-      --border: rgba(148, 163, 184, 0.55);
-      --radius-lg: 16px;
-      --radius-md: 10px;
+      --bg: #fff7fb; --bg-soft: #fff1f8; --card: #ffffff; --accent: #ff5fa2;
+      --accent-soft: rgba(255, 95, 162, 0.16); --text: #0f172a; --muted: #6b7280;
+      --border: rgba(148, 163, 184, 0.55); --radius-lg: 16px; --radius-md: 10px;
       --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, -system-ui, "PingFang TC", "Microsoft JhengHei", sans-serif;
-      background:
-        radial-gradient(circle at 12% 8%, rgba(255, 95, 162, 0.22), transparent 45%),
-        radial-gradient(circle at 88% 12%, rgba(56, 189, 248, 0.22), transparent 42%),
-        radial-gradient(circle at 70% 88%, rgba(167, 139, 250, 0.25), transparent 45%),
-        linear-gradient(180deg, #fff7fb, #f6fbff 55%, #ffffff);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 32px 16px;
-    }
-    .app {
-      width: 100%;
-      max-width: 1080px;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(255, 95, 162, 0.10), transparent 52%),
-        radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.12), transparent 55%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86));
-      border-radius: 28px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: var(--shadow-soft);
-      padding: 20px 22px 24px;
-      backdrop-filter: blur(16px);
-    }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, -system-ui, "PingFang TC", "Microsoft JhengHei", sans-serif; background: radial-gradient(circle at 12% 8%, rgba(255, 95, 162, 0.22), transparent 45%), radial-gradient(circle at 88% 12%, rgba(56, 189, 248, 0.22), transparent 42%), radial-gradient(circle at 70% 88%, rgba(167, 139, 250, 0.25), transparent 45%), linear-gradient(180deg, #fff7fb, #f6fbff 55%, #ffffff); color: var(--text); min-height: 100vh; display: flex; justify-content: center; padding: 32px 16px; }
+    .app { width: 100%; max-width: 1080px; background: radial-gradient(circle at 0% 0%, rgba(255, 95, 162, 0.10), transparent 52%), radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.12), transparent 55%), linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86)); border-radius: 28px; border: 1px solid rgba(148, 163, 184, 0.45); box-shadow: var(--shadow-soft); padding: 20px 22px 24px; backdrop-filter: blur(16px); }
     @media (min-width: 768px) { .app { padding: 24px 26px 30px; } }
     .header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
     .logo-wrap { display: flex; align-items: center; gap: 10px; }
@@ -143,9 +111,7 @@
   <div class="app">
     <header class="header">
       <div class="logo-wrap">
-        <div class="logo-mark">
-          <div class="logo-inner">優惠</div>
-        </div>
+        <div class="logo-mark"><div class="logo-inner">優惠</div></div>
         <div class="title-block">
           <div class="title-row">
             <div class="title">優惠雷達聚合站</div>
@@ -155,11 +121,7 @@
         </div>
       </div>
       <div class="header-actions">
-        <div class="pill">
-          <span>⌘</span>
-          <span class="pill-key">K</span>
-          <span>指令搜尋（預留）</span>
-        </div>
+        <div class="pill"><span>⌘</span><span class="pill-key">K</span><span>指令搜尋（預留）</span></div>
       </div>
     </header>
 
@@ -224,12 +186,6 @@
     let activeType = "all";
     let activeDealId = null;
 
-    // ── 工具函式：推 dataLayer 事件 ──────────────────────────
-    function pushEvent(eventName, payload) {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push(Object.assign({ event: eventName }, payload));
-    }
-
     function renderDeals() {
       const keyword = searchInput.value.trim().toLowerCase();
       const filtered = deals.filter((deal) => {
@@ -254,20 +210,14 @@
       filtered.forEach((deal, index) => {
         const li = document.createElement("li");
         const isActive = activeDealId === deal.id || (activeDealId == null && index === 0);
-        if (activeDealId == null && index === 0) {
-          activeDealId = deal.id;
-          renderPreview(deal);
-        }
+        if (activeDealId == null && index === 0) { activeDealId = deal.id; renderPreview(deal); }
         li.innerHTML = `
           <article class="deal-card${isActive ? ' selected' : ''}" data-id="${deal.id}">
             <div class="deal-main">
               <div class="deal-title-row"><div class="deal-store">${deal.store}</div></div>
               <div class="deal-tag-row">
                 <span class="deal-tag">${deal.title}</span>
-                ${deal.type.map(t => {
-                  const map = { student:"學生", senior:"敬老", birthday:"壽星", anniversary:"週年慶" };
-                  return `<span class="deal-tag secondary">${map[t] || t}</span>`;
-                }).join("")}
+                ${deal.type.map(t => { const map = {student:"學生",senior:"敬老",birthday:"壽星",anniversary:"週年慶"}; return `<span class="deal-tag secondary">${map[t]||t}</span>`; }).join("")}
               </div>
               <p class="deal-desc">${deal.description}</p>
               <div class="deal-meta-row">
@@ -300,28 +250,14 @@
         </div>
         <div class="preview-actions">
           <div class="preview-note">實際優惠內容與條件以商家官網公告為準。</div>
-          <a href="${deal.link}" target="_blank" rel="noreferrer" class="preview-link"
-             data-store="${deal.store}" data-title="${deal.title}">
+          <a href="${deal.link}" target="_blank" rel="noreferrer" class="preview-link">
             前往官方優惠頁 <span class="icon">↗</span>
           </a>
         </div>`;
-
-      // 綁定官方連結點擊事件
-      previewArea.querySelector('.preview-link').addEventListener('click', function() {
-        pushEvent('click_official_link', {
-          deal_store: this.dataset.store,
-          deal_title: this.dataset.title
-        });
-      });
     }
 
-    // 搜尋
-    searchInput.addEventListener("input", () => {
-      activeDealId = null;
-      renderDeals();
-    });
+    searchInput.addEventListener("input", () => { activeDealId = null; renderDeals(); });
 
-    // 分類篩選
     typeFilters.addEventListener("click", (e) => {
       const btn = e.target.closest(".tag");
       if (!btn) return;
@@ -331,25 +267,16 @@
       renderDeals();
     });
 
-    // 卡片點擊：查看詳情
     dealsList.addEventListener("click", (e) => {
       const card = e.target.closest(".deal-card");
       if (!card) return;
       const id = Number(card.dataset.id);
       const deal = deals.find(d => d.id === id);
       if (!deal) return;
-
       activeDealId = id;
       renderPreview(deal);
       [...dealsList.querySelectorAll(".deal-card")].forEach(el => el.classList.remove("selected"));
       card.classList.add("selected");
-
-      // ── 自定義事件 1：點擊優惠卡片 ──
-      pushEvent('view_deal', {
-        deal_store: deal.store,
-        deal_title: deal.title,
-        deal_type: deal.type.join(',')
-      });
     });
 
     renderDeals();
