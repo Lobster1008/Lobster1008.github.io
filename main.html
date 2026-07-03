@@ -904,7 +904,7 @@
         .join("");
     }
 
-    searchInput.addEventListener("input", renderDeals);
+    searchInput.addEventListener("input", () => renderDeals());
 
     typeFilters.addEventListener("click", (e) => {
       const btn = e.target.closest(".filter-tag");
