@@ -935,6 +935,101 @@
     });
 
     renderDeals();
+
+    // 行為事件上報（你指定的事件名）
+    (function setupAnalyticsEvents() {
+      if (!window.collectEvent) return;
+
+      const baseParams = () => ({
+        page_title: document.title,
+        page_url: window.location.href,
+      });
+
+      // predefine_pageview：SDK autotrack 自動上報
+
+      window.addEventListener("beforeunload", function () {
+        window.collectEvent("predefine_page_close", baseParams());
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+          window.collectEvent("predefine_pageview_hide", baseParams());
+        }
+      });
+
+      document.addEventListener(
+        "click",
+        function (e) {
+          const el = e.target && e.target.closest
+            ? e.target.closest("a,button,.deal-card,.filter-tag")
+            : null;
+          if (!el) return;
+
+          const text = (el.innerText || "").trim().slice(0, 80);
+          const href = el.tagName === "A" ? el.getAttribute("href") : null;
+          const card = el.closest(".deal-card");
+          const dealId = card ? Number(card.dataset.id || 0) : null;
+          const deal = dealId ? deals.find((d) => d.id === dealId) : null;
+
+          window.collectEvent("bav2b_click", {
+            ...baseParams(),
+            element_tag: el.tagName ? el.tagName.toLowerCase() : "unknown",
+            element_text: text,
+            element_href: href,
+            element_url: href || undefined,
+            deal_id: dealId || undefined,
+            deal_link: deal ? deal.link : undefined,
+          });
+        },
+        { capture: true }
+      );
+
+      const visibilityByDealId = new Map();
+      let exposureObserver = null;
+      const observeExposures = () => {
+        const cards = document.querySelectorAll(".deal-card[data-id]");
+        if (!cards.length) return;
+
+        if (!("IntersectionObserver" in window)) return;
+
+        if (exposureObserver) exposureObserver.disconnect();
+
+        exposureObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const id = Number(entry.target.dataset.id || 0);
+              if (!id) return;
+
+              const prevVisible = visibilityByDealId.get(id) === true;
+              const nextVisible = entry.isIntersecting === true;
+              if (prevVisible === nextVisible) return;
+              visibilityByDealId.set(id, nextVisible);
+
+              const deal = deals.find((d) => d.id === id);
+              window.collectEvent("$bav2b_exposure", {
+                ...baseParams(),
+                exposure_type: "deal_card",
+                exposure_state: nextVisible ? "enter" : "leave",
+                deal_id: id,
+                deal_store: deal ? deal.store : undefined,
+                deal_title: deal ? deal.title : undefined,
+                deal_link: deal ? deal.link : undefined,
+              });
+            });
+          },
+          { root: null, threshold: 0.6 }
+        );
+
+        cards.forEach((c) => exposureObserver.observe(c));
+      };
+
+      observeExposures();
+      const _renderDeals = renderDeals;
+      renderDeals = function () {
+        _renderDeals();
+        observeExposures();
+      };
+    })();
   </script>
 </body>
 </html>
