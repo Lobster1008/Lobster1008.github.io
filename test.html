@@ -59,17 +59,18 @@
   <title>優惠彙整小站</title>
   <style>
     :root {
-      --bg: #fff7fb;
-      --bg-soft: #fff1f8;
+      --bg-a: #fff7fb;
+      --bg-b: #f6fbff;
       --card: #ffffff;
       --accent: #ff5fa2;
-      --accent-soft: rgba(255, 95, 162, 0.16);
+      --accent-2: #38bdf8;
+      --accent-3: #a78bfa;
       --text: #0f172a;
-      --muted: #6b7280;
-      --border: rgba(148, 163, 184, 0.55);
-      --radius-lg: 16px;
-      --radius-md: 10px;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --muted: #64748b;
+      --border: rgba(148, 163, 184, 0.4);
+      --radius-lg: 22px;
+      --radius-md: 14px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.1);
     }
 
     * {
@@ -79,65 +80,56 @@
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui,
-        -system-ui, "PingFang TC", "Microsoft JhengHei", sans-serif;
-      background:
-        radial-gradient(circle at 12% 8%, rgba(255, 95, 162, 0.22), transparent 45%),
-        radial-gradient(circle at 88% 12%, rgba(56, 189, 248, 0.22), transparent 42%),
-        radial-gradient(circle at 70% 88%, rgba(167, 139, 250, 0.25), transparent 45%),
-        linear-gradient(180deg, #fff7fb, #f6fbff 55%, #ffffff);
+        "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: radial-gradient(circle at 10% 10%, rgba(255, 95, 162, 0.18), transparent 45%),
+        radial-gradient(circle at 90% 15%, rgba(56, 189, 248, 0.18), transparent 45%),
+        radial-gradient(circle at 75% 90%, rgba(167, 139, 250, 0.2), transparent 45%),
+        linear-gradient(180deg, var(--bg-a), var(--bg-b) 55%, #ffffff);
       color: var(--text);
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 32px 16px;
+      padding: 32px 16px 48px;
     }
 
     .app {
-      width: 100%;
       max-width: 1080px;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(255, 95, 162, 0.10), transparent 52%),
-        radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.12), transparent 55%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86));
-      border-radius: 28px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
+      margin: 0 auto;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.88));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
-      padding: 20px 22px 24px;
+      padding: 24px 20px 28px;
       backdrop-filter: blur(16px);
     }
 
     @media (min-width: 768px) {
       .app {
-        padding: 24px 26px 30px;
+        padding: 30px 34px 34px;
       }
     }
 
+    /* Header */
     .header {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
+      gap: 14px;
+      margin-bottom: 20px;
     }
 
     .logo-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .logo-mark {
-      width: 34px;
-      height: 34px;
+      width: 40px;
+      height: 40px;
+      flex: 0 0 auto;
       border-radius: 999px;
       padding: 2px;
-      background: conic-gradient(
-        from 140deg,
-        #ff5fa2,
-        #a78bfa,
-        #38bdf8,
-        #ff5fa2
-      );
+      background: conic-gradient(from 140deg, var(--accent), var(--accent-3), var(--accent-2), var(--accent));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -154,14 +146,7 @@
       justify-content: center;
       color: #7c2d12;
       font-weight: 700;
-      font-size: 18px;
-      letter-spacing: 0.02em;
-    }
-
-    .title-block {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
+      font-size: 15px;
     }
 
     .title-row {
@@ -172,73 +157,63 @@
     }
 
     .title {
-      font-size: 19px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
 
     .chip-beta {
       font-size: 11px;
       text-transform: uppercase;
-      padding: 2px 7px;
+      padding: 2px 8px;
       border-radius: 999px;
       border: 1px solid rgba(56, 189, 248, 0.5);
       color: #e0f2fe;
       background: radial-gradient(circle at top left, #0ea5e9, #020617);
+      letter-spacing: 0.06em;
     }
 
     .subtitle {
-      font-size: 12px;
+      font-size: 12.5px;
       color: var(--muted);
+      margin-top: 2px;
     }
 
-    .header-actions {
+    .header-stats {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       gap: 8px;
     }
 
-    .pill {
+    .stat-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
+      gap: 5px;
+      padding: 6px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
       background: radial-gradient(circle at top left, #111827, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.4);
       color: #e5e7eb;
-      font-size: 11px;
+      font-size: 11.5px;
       white-space: nowrap;
     }
 
-    .pill-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #22c55e, #16a34a);
-      box-shadow: 0 0 10px rgba(74, 222, 128, 0.9);
+    .stat-pill strong {
+      color: #fbcfe8;
+      font-weight: 700;
     }
 
-    .pill-key {
-      padding: 1px 6px;
-      border-radius: 6px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      font-size: 10px;
-      color: #cbd5f5;
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    /* Filters */
-    .filters {
+    /* Toolbar */
+    .toolbar {
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 10px;
-      margin-bottom: 16px;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.7fr);
+      gap: 12px;
       align-items: center;
+      margin-bottom: 12px;
     }
 
-    @media (max-width: 640px) {
-      .filters {
+    @media (max-width: 720px) {
+      .toolbar {
         grid-template-columns: minmax(0, 1fr);
       }
     }
@@ -247,516 +222,383 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: radial-gradient(circle at top left, #020617, #020617);
+      background: #020617;
       border-radius: 999px;
-      padding: 4px 10px 4px 10px;
+      padding: 9px 14px;
       border: 1px solid rgba(55, 65, 81, 0.9);
-      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
     }
 
     .search-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 0, #ffb4d6, #ffffff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #7c2d12;
-      font-size: 11px;
+      font-size: 13px;
+      opacity: 0.8;
     }
 
-    .search-input-wrap {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .search-input-wrap input {
+    .search-box input {
       flex: 1;
       border: none;
       outline: none;
       background: transparent;
-      color: var(--text);
+      color: #f8fafc;
       font-size: 13px;
-      padding: 4px 0;
     }
 
-    .search-input-wrap input::placeholder {
-      color: #6b7280;
+    .search-box input::placeholder {
+      color: #94a3b8;
     }
 
     .filter-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      justify-content: flex-end;
+      overflow-x: auto;
+      padding-bottom: 2px;
     }
 
-    .tag {
+    .filter-tag {
+      flex: 0 0 auto;
       border-radius: 999px;
-      font-size: 11px;
-      padding: 4px 9px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 11.5px;
+      padding: 6px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
       background: rgba(255, 255, 255, 0.9);
-      color: #0f172a;
+      color: var(--text);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      opacity: 0.95;
-      transition: all 0.18s ease-out;
+      gap: 5px;
+      transition: all 0.15s ease-out;
     }
 
-    .tag span.dot {
-      width: 5px;
-      height: 5px;
+    .filter-tag .dot {
+      width: 6px;
+      height: 6px;
       border-radius: 999px;
-      background: var(--accent);
     }
 
-    .tag.active {
-      border-color: rgba(255, 95, 162, 0.65);
-      background: radial-gradient(circle at 0 0, rgba(255, 95, 162, 0.22), #ffffff);
-      color: #0f172a;
+    .filter-tag.active {
+      border-color: rgba(255, 95, 162, 0.6);
+      background: radial-gradient(circle at 0 0, rgba(255, 95, 162, 0.2), #ffffff);
       box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.14);
       transform: translateY(-1px);
+      font-weight: 600;
     }
 
-    .tag:hover {
-      border-color: rgba(255, 95, 162, 0.55);
+    .filter-tag:hover {
+      border-color: rgba(255, 95, 162, 0.5);
       transform: translateY(-1px);
     }
 
-    /* Content */
-    .content {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr);
-      gap: 14px;
-    }
-
-    @media (max-width: 900px) {
-      .content {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    /* Deals list */
-    .deals {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86));
-      border-radius: 18px;
-      padding: 12px 12px 6px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.09);
-      max-height: 460px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .deals-header {
+    /* Results bar */
+    .results-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 6px;
-    }
-
-    .deals-header-left {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-
-    .deals-title {
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .deals-meta {
-      font-size: 11px;
+      margin-bottom: 14px;
+      font-size: 12px;
       color: var(--muted);
     }
 
-    .deals-badge {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 95, 162, 0.35);
-      color: #7c2d12;
-      background: rgba(255, 255, 255, 0.92);
+    .clear-filters {
+      border: none;
+      background: none;
+      color: #0ea5e9;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 2px 4px;
     }
 
-    .deals-list {
-      margin: 0;
-      padding: 4px;
-      list-style: none;
-      overflow: auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 95, 162, 0.35) transparent;
+    .clear-filters[hidden] {
+      display: none;
     }
 
-    .deals-list::-webkit-scrollbar {
-      width: 6px;
-    }
-    .deals-list::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .deals-list::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 95, 162, 0.35);
-      border-radius: 999px;
+    /* Grid */
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
     }
 
     .deal-card {
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
-      gap: 6px;
-      padding: 12px 12px;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
       border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background:
-        radial-gradient(circle at 10% 0%, rgba(255, 95, 162, 0.13), transparent 55%),
-        radial-gradient(circle at 90% 10%, rgba(56, 189, 248, 0.12), transparent 55%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.90));
-      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
-      margin-bottom: 10px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.18s ease-out, border-color 0.18s ease-out,
-        box-shadow 0.18s ease-out, background 0.18s ease-out;
-    }
-
-    .deal-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top left, rgba(255, 95, 162, 0.20), transparent 52%),
-        radial-gradient(circle at 70% 10%, rgba(56, 189, 248, 0.18), transparent 55%);
-      opacity: 0;
-      transition: opacity 0.18s ease-out;
-      pointer-events: none;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.92));
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
     }
 
     .deal-card:hover {
-      transform: translateY(-3px) rotate(-0.08deg);
-      border-color: rgba(255, 95, 162, 0.55);
-      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14);
+      transform: translateY(-3px);
+      border-color: rgba(255, 95, 162, 0.45);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
     }
 
-    .deal-card:hover::before {
-      opacity: 1;
-    }
-
-    .deal-card.selected {
-      border-color: rgba(56, 189, 248, 0.55);
-      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14),
-        0 0 0 4px rgba(56, 189, 248, 0.18);
-    }
-
-    .deal-main {
+    .card-top {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-width: 0;
-    }
-
-    .deal-title-row {
-      display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 8px;
     }
 
-    .deal-store {
-      font-size: 12px;
-      font-weight: 500;
-      color: #0f172a;
+    .card-store {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      min-width: 0;
     }
 
-    .deal-tag-row {
+    .store-icon {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 auto;
+      border-radius: 12px;
+      background: linear-gradient(160deg, rgba(255, 95, 162, 0.16), rgba(56, 189, 248, 0.14));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .store-info {
+      min-width: 0;
+    }
+
+    .store-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .deal-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      margin-top: 1px;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .badge-hot {
+      background: linear-gradient(135deg, #ff5fa2, #ff8fc0);
+    }
+
+    .badge-new {
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    }
+
+    .badge-urgent {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35); }
+      50% { box-shadow: 0 0 0 5px rgba(239, 68, 68, 0); }
+    }
+
+    .tag-row {
       display: flex;
       flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .tag-chip {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid;
+      display: inline-flex;
+      align-items: center;
       gap: 4px;
     }
 
-    .deal-tag {
-      font-size: 10px;
-      padding: 3px 8px;
+    .tag-chip .dot {
+      width: 5px;
+      height: 5px;
       border-radius: 999px;
-      background: rgba(255, 95, 162, 0.12);
-      color: #7c2d12;
-      border: 1px solid rgba(255, 95, 162, 0.25);
     }
 
-    .deal-tag.secondary {
-      background: rgba(56, 189, 248, 0.14);
-      border-color: rgba(56, 189, 248, 0.26);
-      color: #075985;
-    }
-
-    .deal-tag.outline {
-      background: transparent;
-      border-color: rgba(75, 85, 99, 0.9);
-      color: #e5e7eb;
-    }
-
-    .deal-desc {
-      font-size: 11px;
+    .card-desc {
+      font-size: 12.5px;
       color: #334155;
-      line-height: 1.5;
+      line-height: 1.6;
+      margin: 10px 0 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    .deal-meta-row {
+    .card-meta {
       display: flex;
       align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 3px;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 12px;
     }
 
     .meta-item {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      font-size: 10px;
+      gap: 5px;
+      font-size: 11px;
       color: var(--muted);
     }
 
-    .meta-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 12px rgba(255, 95, 162, 0.45);
-    }
-
-    .meta-badge {
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(124, 58, 237, 0.22);
-      color: #5b21b6;
-      background: rgba(124, 58, 237, 0.08);
-      font-size: 10px;
-    }
-
-    .deal-side {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 4px;
-      text-align: right;
-    }
-
-    .saving {
-      font-size: 11px;
-      color: #6b7280;
-    }
-
-    .saving-amount {
-      font-size: 16px;
-      font-weight: 600;
-      color: #0f172a;
-    }
-
-    .btn-ghost {
-      border-radius: 999px;
-      padding: 4px 9px;
+    .saving-chip {
+      font-size: 12px;
+      font-weight: 700;
+      color: #9d174d;
+      background: rgba(255, 95, 162, 0.12);
       border: 1px solid rgba(255, 95, 162, 0.28);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), #ffffff);
-      color: #7c2d12;
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
-      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out,
-        border-color 0.18s ease-out;
-    }
-
-    .btn-ghost span.icon {
-      font-size: 12px;
-      transform: translateY(0.5px);
-    }
-
-    .btn-ghost:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255, 95, 162, 0.45);
-      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.1);
-    }
-
-    /* Sidebar / preview */
-    .side-panel {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.86));
-      border-radius: 18px;
-      padding: 12px 12px 10px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.09);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 180px;
-    }
-
-    .side-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .side-title {
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .side-subtitle {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .deal-preview {
-      border-radius: 18px;
-      padding: 12px 12px 11px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      background:
-        radial-gradient(circle at 8% 0%, rgba(255, 95, 162, 0.12), transparent 55%),
-        radial-gradient(circle at 92% 8%, rgba(56, 189, 248, 0.12), transparent 55%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.9));
-      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.10);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .preview-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .preview-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #6b7280;
-    }
-
-    .preview-kicker .dot {
-      width: 8px;
-      height: 8px;
+      padding: 3px 10px;
       border-radius: 999px;
-      background: radial-gradient(circle, rgba(255, 95, 162, 0.95), rgba(255, 95, 162, 0.45));
-      box-shadow: 0 0 12px rgba(255, 95, 162, 0.35);
-      flex: 0 0 auto;
+      white-space: nowrap;
     }
 
-    .preview-title {
-      font-size: 14px;
-      font-weight: 650;
-      letter-spacing: 0.01em;
-      color: #0f172a;
-      margin-top: 2px;
-    }
-
-    .preview-desc {
+    .expand-btn {
+      margin-top: 12px;
+      width: 100%;
+      border: 1px solid var(--border);
+      background: rgba(248, 250, 252, 0.8);
+      border-radius: 999px;
+      padding: 7px 12px;
       font-size: 12px;
-      color: #334155;
-      line-height: 1.55;
-      margin: 0;
-    }
-
-    .preview-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 8px;
-    }
-
-    .preview-row {
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
       display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 10px 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(255, 255, 255, 0.8);
-    }
-
-    .preview-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 12px;
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255, 95, 162, 0.12);
-      border: 1px solid rgba(255, 95, 162, 0.22);
-      color: #7c2d12;
-      flex: 0 0 auto;
-      font-size: 13px;
+      gap: 6px;
+      transition: background 0.15s ease-out, border-color 0.15s ease-out;
     }
 
-    .preview-row strong {
+    .expand-btn:hover {
+      border-color: rgba(255, 95, 162, 0.4);
+      background: rgba(255, 95, 162, 0.06);
+    }
+
+    .expand-btn .chevron {
+      transition: transform 0.2s ease-out;
+    }
+
+    .expand-btn.open .chevron {
+      transform: rotate(180deg);
+    }
+
+    .details {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.25s ease;
+    }
+
+    .details.open {
+      grid-template-rows: 1fr;
+    }
+
+    .details-inner {
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .details-content {
+      padding-top: 12px;
+      margin-top: 10px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      opacity: 0;
+      transition: opacity 0.2s ease-out;
+    }
+
+    .details.open .details-content {
+      opacity: 1;
+      transition-delay: 0.08s;
+    }
+
+    .detail-row strong {
       display: block;
       font-size: 11px;
-      color: #0f172a;
+      color: var(--muted);
       margin-bottom: 2px;
-      font-weight: 650;
+      font-weight: 600;
     }
 
-    .preview-row span {
+    .detail-row span {
       display: block;
-      font-size: 11px;
-      color: #475569;
+      font-size: 12.5px;
+      color: #334155;
       line-height: 1.5;
     }
 
-    .preview-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .preview-note {
-      font-size: 10px;
-      color: #6b7280;
-    }
-
-    .preview-link {
+    .detail-link {
+      align-self: flex-start;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 10px;
+      padding: 7px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      background: rgba(56, 189, 248, 0.10);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      background: rgba(56, 189, 248, 0.1);
       color: #075985;
-      font-size: 11px;
-      font-weight: 600;
-      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.06);
-      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out,
-        border-color 0.18s ease-out;
+      font-size: 11.5px;
+      font-weight: 700;
+      transition: transform 0.15s ease-out, border-color 0.15s ease-out;
     }
 
-    .preview-link:hover {
+    .detail-link:hover {
       transform: translateY(-1px);
-      border-color: rgba(56, 189, 248, 0.55);
-      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.1);
+      border-color: rgba(56, 189, 248, 0.6);
     }
 
-    .empty-hint {
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 16px;
+      color: var(--muted);
+    }
+
+    .empty-emoji {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 4px;
+    }
+
+    .empty-state span {
+      font-size: 12px;
+    }
+
+    /* Footer */
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
       font-size: 11px;
       color: var(--muted);
-      line-height: 1.5;
+      line-height: 1.6;
     }
   </style>
 </head>
@@ -764,9 +606,7 @@
   <div class="app">
     <header class="header">
       <div class="logo-wrap">
-        <div class="logo-mark">
-          <div class="logo-inner">優惠</div>
-        </div>
+        <div class="logo-mark"><div class="logo-inner">優惠</div></div>
         <div class="title-block">
           <div class="title-row">
             <div class="title">優惠雷達聚合站</div>
@@ -775,93 +615,54 @@
           <div class="subtitle">從各家官網優惠專區彙整資訊，一眼掌握最新好康。</div>
         </div>
       </div>
-      <div class="header-actions">
-        <div class="pill">
-          <span>⌘</span>
-          <span class="pill-key">K</span>
-          <span>指令搜尋（預留）</span>
-        </div>
+      <div class="header-stats">
+        <span class="stat-pill">共 <strong id="totalCount">0</strong> 檔優惠</span>
+        <span class="stat-pill">更新於 2026/07/03</span>
       </div>
     </header>
 
-    <section class="filters">
+    <section class="toolbar">
       <div class="search-box">
-        <div class="search-icon">🔍</div>
-        <div class="search-input-wrap">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="搜尋店家、關鍵字或優惠內容…"
-          />
-        </div>
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input id="searchInput" type="text" placeholder="搜尋店家、關鍵字或優惠內容…" />
       </div>
-      <div class="filter-tags" id="typeFilters">
-        <button class="tag active" data-type="all">
-          全部
-        </button>
-        <button class="tag" data-type="student">
-          <span class="dot"></span>
-          學生優惠
-        </button>
-        <button class="tag" data-type="senior">
-          <span class="dot"></span>
-          敬老優惠
-        </button>
-        <button class="tag" data-type="birthday">
-          <span class="dot"></span>
-          生日/壽星
-        </button>
-        <button class="tag" data-type="anniversary">
-          <span class="dot"></span>
-          週年慶/檔期
-        </button>
-      </div>
+      <div class="filter-tags" id="typeFilters"></div>
     </section>
 
-    <section class="content">
-      <div class="deals">
-        <div class="deals-header">
-          <div class="deals-header-left">
-            <div class="deals-title">精選優惠彙整</div>
-            <div class="deals-meta" id="dealsCountLabel">共 0 筆</div>
-          </div>
-          <span class="deals-badge">目前顯示之優惠以實際資料為準</span>
-        </div>
-        <ul class="deals-list" id="dealsList">
-          <!-- JS 注入卡片 -->
-        </ul>
-      </div>
+    <div class="results-bar">
+      <span id="resultsCount">共 0 筆</span>
+      <button class="clear-filters" id="clearFilters" type="button" hidden>清除篩選</button>
+    </div>
 
-      <aside class="side-panel">
-        <div class="side-header">
-          <div>
-            <div class="side-title">優惠小卡預覽</div>
-            <div class="side-subtitle">點一下左邊的卡片，就能在這裡看到重點與連結。</div>
-          </div>
-          <div></div>
-        </div>
+    <main class="deals-grid" id="dealsGrid"></main>
 
-        <div id="previewArea" class="deal-preview">
-          <div class="empty-hint">
-            還沒有選擇優惠。<br />
-            從左側挑一張喜歡的優惠卡片吧。
-          </div>
-        </div>
-      </aside>
-    </section>
+    <p class="footer-note">
+      ※ 頁面店家與優惠內容均為示範假資料，實際優惠請以各商家官網公告為準。
+    </p>
   </div>
 
   <script>
+    const TAG_META = {
+      student: { label: "學生", color: "#0369a1", bg: "rgba(56,189,248,.14)", border: "rgba(56,189,248,.32)", dot: "#38bdf8" },
+      senior: { label: "敬老", color: "#5b21b6", bg: "rgba(167,139,250,.16)", border: "rgba(167,139,250,.34)", dot: "#a78bfa" },
+      birthday: { label: "壽星", color: "#9d174d", bg: "rgba(255,95,162,.14)", border: "rgba(255,95,162,.32)", dot: "#ff5fa2" },
+      anniversary: { label: "週年慶", color: "#92400e", bg: "rgba(245,158,11,.14)", border: "rgba(245,158,11,.32)", dot: "#f59e0b" },
+      member: { label: "會員", color: "#065f46", bg: "rgba(16,185,129,.14)", border: "rgba(16,185,129,.32)", dot: "#10b981" },
+      flash: { label: "限時", color: "#991b1b", bg: "rgba(239,68,68,.14)", border: "rgba(239,68,68,.32)", dot: "#ef4444" },
+    };
+
     const deals = [
       {
         id: 1,
         store: "咖啡小屋",
+        icon: "☕",
+        badgeType: "hot",
+        badge: "熱門",
         title: "壽星當月：第二杯 5 折",
         type: ["birthday"],
         tags: ["咖啡飲品", "門市", "會員"],
-        description:
-          "壽星當月到店出示證件＋會員條碼，購買同品項兩杯飲品，第二杯享 5 折。",
-        period: "2026/03/01 ~ 2026/12/31",
+        description: "壽星當月到店出示證件＋會員條碼，購買同品項兩杯飲品，第二杯享 5 折。",
+        period: "2026/01/01 ~ 2026/12/31",
         limit: "每人每月限 1 次；部分季節限定品項不適用（以現場公告為準）。",
         saving: "第二杯最高省下約 50%",
         savingShort: "第二杯 5 折",
@@ -870,11 +671,11 @@
       {
         id: 2,
         store: "書香文具",
+        icon: "📚",
         title: "學生持證：指定類別 9 折",
         type: ["student"],
         tags: ["文具書籍", "學生證", "常態"],
-        description:
-          "結帳時出示有效學生證，可享指定書籍/文具 9 折；特價品與部分品牌不參與。",
+        description: "結帳時出示有效學生證，可享指定書籍/文具 9 折；特價品與部分品牌不參與。",
         period: "長期（依門市公告）",
         limit: "需本人出示證件；每筆交易限用一次；不與其他折扣併用。",
         saving: "平均省下約 10%",
@@ -884,12 +685,14 @@
       {
         id: 3,
         store: "繽紛百貨",
-        title: "週年慶：滿額送＋卡友加碼",
+        icon: "🛍️",
+        badgeType: "hot",
+        badge: "熱門",
+        title: "年中慶：滿額送＋卡友加碼",
         type: ["anniversary"],
-        tags: ["週年慶", "滿額贈", "卡友回饋"],
-        description:
-          "活動期間累計消費達門檻即可兌換贈券；搭配指定銀行信用卡再享加碼回饋（以公告為準）。",
-        period: "2026/10/01 ~ 2026/10/31",
+        tags: ["年中慶", "滿額贈", "卡友回饋"],
+        description: "活動期間累計消費達門檻即可兌換贈券；搭配指定銀行信用卡再享加碼回饋（以公告為準）。",
+        period: "2026/07/01 ~ 2026/07/31",
         limit: "贈券/回饋名額有限；部分專櫃不適用；詳情依活動頁。",
         saving: "常見組合：滿額送＋加碼回饋",
         savingShort: "贈券＋加碼",
@@ -898,12 +701,12 @@
       {
         id: 4,
         store: "暖呼呼火鍋",
+        icon: "🍲",
         title: "敬老平日午餐：套餐 8 折",
         type: ["senior"],
         tags: ["火鍋", "敬老", "內用"],
-        description:
-          "年滿 65 歲長者於平日午餐時段內用，出示證件即可享單人套餐 8 折。",
-        period: "即日起 ~ 2026/06/30",
+        description: "年滿 65 歲長者於平日午餐時段內用，出示證件即可享單人套餐 8 折。",
+        period: "即日起 ~ 2026/09/30",
         limit: "不含服務費；國定假日/特殊節日不適用；以門市公告為準。",
         saving: "約省下 20%",
         savingShort: "套餐 8 折",
@@ -912,11 +715,11 @@
       {
         id: 5,
         store: "喵喵影城",
+        icon: "🎬",
         title: "學生平日票：優惠價起",
         type: ["student"],
         tags: ["電影票", "學生證", "平日"],
-        description:
-          "平日觀賞一般 2D 場次，出示學生證可享學生票價；特殊影廳與熱門場次依現場公告。",
+        description: "平日觀賞一般 2D 場次，出示學生證可享學生票價；特殊影廳與熱門場次依現場公告。",
         period: "常態（可能調整）",
         limit: "入場需出示學生證；優惠不可與其他折扣併用。",
         saving: "比原價更划算",
@@ -926,243 +729,290 @@
       {
         id: 6,
         store: "甜甜茶飲",
+        icon: "🧋",
         title: "集點禮：10 點兌換飲品 1 杯",
-        type: ["birthday", "anniversary"],
+        type: ["birthday", "anniversary", "member"],
         tags: ["集點", "APP 會員", "兌換"],
-        description:
-          "加入會員後消費集點，集滿 10 點可兌換指定飲品 1 杯；點數與可兌品項依活動頁。",
+        description: "加入會員後消費集點，集滿 10 點可兌換指定飲品 1 杯；點數與可兌品項依活動頁。",
         period: "活動至 2026/12/31",
         limit: "點數有期限；逾期失效；兌換品項可能隨檔期調整。",
         saving: "集點越常喝越划算",
         savingShort: "10 點換 1 杯",
         link: "https://www.example.com/",
       },
+      {
+        id: 7,
+        store: "銀髮健身房",
+        icon: "💪",
+        badgeType: "new",
+        badge: "NEW",
+        title: "新會員首月免費體驗",
+        type: ["senior", "member"],
+        tags: ["健身房", "新會員", "體驗"],
+        description: "年滿 55 歲新會員加入即享首月會籍免費，並附贈 1 次教練體驗課。",
+        period: "2026/07/01 ~ 2026/08/31",
+        limit: "限新會員申請；需完成健康評估；逾期恢復原價續會。",
+        saving: "首月省下全額月費",
+        savingShort: "首月免費",
+        link: "https://www.example.com/",
+      },
+      {
+        id: 8,
+        store: "潮流服飾 3 號店",
+        icon: "👕",
+        badgeType: "urgent",
+        badge: "即將截止",
+        title: "限時 48 小時：全館 75 折",
+        type: ["flash"],
+        tags: ["服飾", "限時快閃", "全館"],
+        description: "指定 48 小時快閃活動，全館服飾（含新品）一律 75 折，線上線下同步適用。",
+        period: "2026/07/03 ~ 2026/07/05",
+        limit: "部分聯名商品不適用；數量有限，售完為止。",
+        saving: "全館最高省 25%",
+        savingShort: "全館 75 折",
+        link: "https://www.example.com/",
+      },
+      {
+        id: 9,
+        store: "早安烘焙坊",
+        icon: "🥐",
+        title: "壽星當月：招牌甜點買一送一",
+        type: ["birthday", "member"],
+        tags: ["烘焙", "壽星", "會員"],
+        description: "壽星當月加入 APP 會員，出示生日資訊即可兌換招牌甜點買一送一券。",
+        period: "常態（依會員生日月）",
+        limit: "每人每年限領 1 次；不可與其他優惠併用。",
+        saving: "甜點省下 100%",
+        savingShort: "買一送一",
+        link: "https://www.example.com/",
+      },
+      {
+        id: 10,
+        store: "樂活超市",
+        icon: "🛒",
+        title: "敬老日：每月 15 號滿千折百",
+        type: ["senior", "member"],
+        tags: ["超市", "敬老日", "滿額折扣"],
+        description: "每月 15 號敬老日，65 歲以上會員憑證消費滿 1000 元現折 100 元。",
+        period: "每月 15 日（常態活動）",
+        limit: "限當日單筆消費；不含菸酒、儲值卡與服務費。",
+        saving: "滿千現折 100 元",
+        savingShort: "滿千折百",
+        link: "https://www.example.com/",
+      },
+      {
+        id: 11,
+        store: "好眠家居",
+        icon: "🛋️",
+        badgeType: "urgent",
+        badge: "即將截止",
+        title: "年中慶：寢具家飾跳樓價",
+        type: ["anniversary"],
+        tags: ["家居", "寢具", "年中慶"],
+        description: "年中慶期間精選寢具與家飾特惠出清，部分品項下殺至 3 折起。",
+        period: "2026/06/01 ~ 2026/07/15",
+        limit: "特惠品恕不退換；數量有限，售完不補。",
+        saving: "最高省 70%",
+        savingShort: "3 折起",
+        link: "https://www.example.com/",
+      },
+      {
+        id: 12,
+        store: "手機通訊行",
+        icon: "📱",
+        badgeType: "hot",
+        badge: "熱門",
+        title: "舊機換新：加碼折抵上看 3000 元",
+        type: ["flash", "member"],
+        tags: ["3C", "舊機換新", "會員"],
+        description: "攜帶任一廠牌舊手機至門市鑑定，換購指定新機再享會員加碼折抵。",
+        period: "2026/07/01 ~ 2026/07/31",
+        limit: "折抵金額依機況鑑定結果而定；需為會員本人辦理。",
+        saving: "最高折抵 3000 元",
+        savingShort: "加碼折 3000",
+        link: "https://www.example.com/",
+      },
     ];
 
     const searchInput = document.getElementById("searchInput");
-    const dealsList = document.getElementById("dealsList");
-    const dealsCountLabel = document.getElementById("dealsCountLabel");
+    const dealsGrid = document.getElementById("dealsGrid");
+    const resultsCount = document.getElementById("resultsCount");
+    const clearFiltersBtn = document.getElementById("clearFilters");
     const typeFilters = document.getElementById("typeFilters");
-    const previewArea = document.getElementById("previewArea");
+    const totalCount = document.getElementById("totalCount");
+
+    totalCount.textContent = deals.length;
+
+    typeFilters.innerHTML = ["all", ...Object.keys(TAG_META)]
+      .map((type) => {
+        if (type === "all") {
+          return `<button class="filter-tag active" data-type="all">全部</button>`;
+        }
+        const meta = TAG_META[type];
+        return `<button class="filter-tag" data-type="${type}"><span class="dot" style="background:${meta.dot}"></span>${meta.label}</button>`;
+      })
+      .join("");
 
     let activeType = "all";
-    let activeDealId = null;
+
+    function tagChip(type) {
+      const m = TAG_META[type];
+      if (!m) return "";
+      return `<span class="tag-chip" style="background:${m.bg};border-color:${m.border};color:${m.color}"><span class="dot" style="background:${m.dot}"></span>${m.label}</span>`;
+    }
+
+    function matchesKeyword(deal, keyword) {
+      if (!keyword) return true;
+      const bundle = [deal.store, deal.title, deal.description, deal.limit, ...(deal.tags || [])]
+        .join(" ")
+        .toLowerCase();
+      return bundle.includes(keyword);
+    }
 
     function renderDeals() {
       const keyword = searchInput.value.trim().toLowerCase();
-
       const filtered = deals.filter((deal) => {
-        if (activeType !== "all" && !deal.type.includes(activeType)) {
-          return false;
-        }
-        if (!keyword) return true;
-
-        const bundle = [
-          deal.store,
-          deal.title,
-          deal.description,
-          deal.limit,
-          ...(deal.tags || []),
-        ]
-          .join(" ")
-          .toLowerCase();
-
-        return bundle.includes(keyword);
+        if (activeType !== "all" && !deal.type.includes(activeType)) return false;
+        return matchesKeyword(deal, keyword);
       });
 
-      dealsCountLabel.textContent = `共 ${filtered.length} 筆`;
-
-      dealsList.innerHTML = "";
+      resultsCount.textContent = `共 ${filtered.length} 筆`;
+      clearFiltersBtn.hidden = activeType === "all" && !keyword;
 
       if (!filtered.length) {
-        const li = document.createElement("li");
-        li.innerHTML =
-          '<div class="deal-card"><div class="deal-main"><div class="deal-desc">找不到符合條件的優惠，試試移除篩選或換個關鍵字。</div></div></div>';
-        dealsList.appendChild(li);
-        previewArea.innerHTML =
-          '<div class="empty-hint">目前篩選條件下沒有資料。<br />這裡將在你選擇優惠卡片後，顯示詳細說明與連結。</div>';
-        activeDealId = null;
+        dealsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-emoji">🔍</div>
+            <p>找不到符合條件的優惠</p>
+            <span>試試移除篩選或換個關鍵字</span>
+          </div>`;
         return;
       }
 
-      filtered.forEach((deal, index) => {
-        const li = document.createElement("li");
-
-        const isActive = activeDealId === deal.id || (activeDealId == null && index === 0);
-        if (activeDealId == null && index === 0) {
-          activeDealId = deal.id;
-          renderPreview(deal);
-        }
-
-        li.innerHTML = `
-          <article class="deal-card" data-id="${deal.id}">
-            <div class="deal-main">
-              <div class="deal-title-row">
-                <div class="deal-store">${deal.store}</div>
-              </div>
-              <div class="deal-tag-row">
-                <span class="deal-tag">${deal.title}</span>
-                ${deal.type
-                  .map((t) => {
-                    const map = {
-                      student: "學生",
-                      senior: "敬老",
-                      birthday: "壽星",
-                      anniversary: "週年慶",
-                    };
-                    return `<span class="deal-tag secondary">${map[t] || t}</span>`;
-                  })
-                  .join("")}
-              </div>
-              <p class="deal-desc">${deal.description}</p>
-              <div class="deal-meta-row">
-                <span class="meta-item">
-                  <span class="meta-dot"></span>
-                  ${deal.period}
-                </span>
-                <span class="meta-badge">使用前請再確認官網公告</span>
+      dealsGrid.innerHTML = filtered
+        .map(
+          (deal) => `
+        <article class="deal-card" data-id="${deal.id}">
+          <div class="card-top">
+            <div class="card-store">
+              <span class="store-icon" aria-hidden="true">${deal.icon}</span>
+              <div class="store-info">
+                <div class="store-name">${deal.store}</div>
+                <div class="deal-title">${deal.title}</div>
               </div>
             </div>
-            <div class="deal-side">
-              <div>
-                <div class="saving">估計可省</div>
-                <div class="saving-amount">${deal.savingShort}</div>
+            ${deal.badge ? `<span class="badge badge-${deal.badgeType}">${deal.badge}</span>` : ""}
+          </div>
+
+          <div class="tag-row">${deal.type.map(tagChip).join("")}</div>
+
+          <p class="card-desc">${deal.description}</p>
+
+          <div class="card-meta">
+            <span class="meta-item"><span aria-hidden="true">⏰</span>${deal.period}</span>
+            <span class="saving-chip">${deal.savingShort}</span>
+          </div>
+
+          <button class="expand-btn" type="button" aria-expanded="false">
+            <span>查看詳情</span><span class="chevron" aria-hidden="true">⌄</span>
+          </button>
+
+          <div class="details">
+            <div class="details-inner">
+              <div class="details-content">
+                <div class="detail-row"><strong>估計可省</strong><span>${deal.saving}</span></div>
+                <div class="detail-row"><strong>使用限制</strong><span>${deal.limit}</span></div>
+                <a href="${deal.link}" target="_blank" rel="noreferrer" class="detail-link">
+                  前往官方優惠頁 <span aria-hidden="true">↗</span>
+                </a>
               </div>
-              <button class="btn-ghost" type="button">
-                <span class="icon">↗</span>
-                <span>查看詳情</span>
-              </button>
             </div>
-          </article>
-        `;
-
-        if (isActive) {
-          li.querySelector(".deal-card").classList.add("selected");
-        }
-
-        dealsList.appendChild(li);
-      });
+          </div>
+        </article>`
+        )
+        .join("");
     }
 
-    function renderPreview(deal) {
-      previewArea.innerHTML = `
-        <div class="preview-top">
-          <div>
-            <div class="preview-kicker"><span class="dot"></span>${deal.store}</div>
-            <div class="preview-title">${deal.title}</div>
-          </div>
-        </div>
-
-        <p class="preview-desc">${deal.description}</p>
-
-        <div class="preview-grid">
-          <div class="preview-row">
-            <div class="preview-icon">⏰</div>
-            <div>
-              <strong>活動期間</strong>
-              <span>${deal.period}</span>
-            </div>
-          </div>
-          <div class="preview-row">
-            <div class="preview-icon">🎀</div>
-            <div>
-              <strong>估計可省</strong>
-              <span>${deal.saving}</span>
-            </div>
-          </div>
-          <div class="preview-row">
-            <div class="preview-icon">🧾</div>
-            <div>
-              <strong>使用限制</strong>
-              <span>${deal.limit}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="preview-actions">
-          <div class="preview-note">實際優惠內容與條件以商家官網公告為準。</div>
-          <a href="${deal.link}" target="_blank" rel="noreferrer" class="preview-link">
-            前往官方優惠頁 <span class="icon">↗</span>
-          </a>
-        </div>
-      `;
-    }
-
-    // 事件綁定
-    searchInput.addEventListener("input", () => {
-      activeDealId = null;
-      renderDeals();
-    });
+    searchInput.addEventListener("input", () => renderDeals());
 
     typeFilters.addEventListener("click", (e) => {
-      const btn = e.target.closest(".tag");
+      const btn = e.target.closest(".filter-tag");
       if (!btn) return;
-
-      const type = btn.dataset.type;
-      if (!type) return;
-
-      activeType = type;
-      activeDealId = null;
-
-      [...typeFilters.querySelectorAll(".tag")].forEach((el) =>
+      activeType = btn.dataset.type;
+      [...typeFilters.querySelectorAll(".filter-tag")].forEach((el) =>
         el.classList.toggle("active", el === btn)
       );
-
       renderDeals();
     });
 
-    dealsList.addEventListener("click", (e) => {
-      const card = e.target.closest(".deal-card");
-      if (!card) return;
-
-      const id = Number(card.dataset.id);
-      const deal = deals.find((d) => d.id === id);
-      if (!deal) return;
-
-      activeDealId = id;
-      renderPreview(deal);
-
-      [...dealsList.querySelectorAll(".deal-card")].forEach((el) => {
-        el.classList.remove("selected");
-      });
-      card.classList.add("selected");
+    clearFiltersBtn.addEventListener("click", () => {
+      activeType = "all";
+      searchInput.value = "";
+      [...typeFilters.querySelectorAll(".filter-tag")].forEach((el) =>
+        el.classList.toggle("active", el.dataset.type === "all")
+      );
+      renderDeals();
     });
 
-    // 初始化
+    dealsGrid.addEventListener("click", (e) => {
+      const btn = e.target.closest(".expand-btn");
+      if (!btn) return;
+      const details = btn.nextElementSibling;
+      const isOpen = details.classList.toggle("open");
+      btn.classList.toggle("open", isOpen);
+      btn.setAttribute("aria-expanded", String(isOpen));
+    });
+
     renderDeals();
 
     // 自訂埋點補充
     (function setupAnalyticsEvents() {
       if (!window.collectEvent) return;
 
-      function eventParams(extra) {
-        var params = {
-          url: window.location.href,
-          page_title: document.title,
-        };
-        if (!extra) return params;
-        Object.keys(extra).forEach(function (key) {
-          var val = extra[key];
-          if (val !== undefined && val !== null && val !== "") {
-            params[key] = val;
-          }
-        });
-        return params;
-      }
+      const baseParams = () => ({
+        page_title: document.title,
+        page_url: window.location.href,
+      });
 
-      // predefine_pageview、bav2b_click：SDK autotrack 自動上報
+      // predefine_pageview：SDK autotrack 自動上報
 
       window.addEventListener("beforeunload", function () {
-        window.collectEvent("predefine_page_close", eventParams());
+        window.collectEvent("predefine_page_close", baseParams());
       });
 
       document.addEventListener("visibilitychange", function () {
         if (document.hidden) {
-          window.collectEvent("predefine_pageview_hide", eventParams());
+          window.collectEvent("predefine_pageview_hide", baseParams());
         }
       });
 
-      // $bav2b_exposure：優惠卡片曝光（系統預置曝光事件）
+      document.addEventListener(
+        "click",
+        function (e) {
+          const el = e.target && e.target.closest
+            ? e.target.closest("a,button,.deal-card,.filter-tag")
+            : null;
+          if (!el) return;
+
+          const text = (el.innerText || "").trim().slice(0, 80);
+          const href = el.tagName === "A" ? el.getAttribute("href") : null;
+          const card = el.closest(".deal-card");
+          const dealId = card ? Number(card.dataset.id || 0) : null;
+          const deal = dealId ? deals.find((d) => d.id === dealId) : null;
+
+          window.collectEvent("bav2b_click", {
+            ...baseParams(),
+            element_tag: el.tagName ? el.tagName.toLowerCase() : "unknown",
+            element_text: text,
+            element_href: href,
+            element_url: href || undefined,
+            deal_id: dealId || undefined,
+            deal_link: deal ? deal.link : undefined,
+          });
+        },
+        { capture: true }
+      );
+
       const visibilityByDealId = new Map();
       let exposureObserver = null;
       const observeExposures = () => {
@@ -1176,8 +1026,7 @@
         exposureObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              const target = entry.target;
-              const id = Number(target.dataset.id || 0);
+              const id = Number(entry.target.dataset.id || 0);
               if (!id) return;
 
               const prevVisible = visibilityByDealId.get(id) === true;
@@ -1186,14 +1035,15 @@
               visibilityByDealId.set(id, nextVisible);
 
               const deal = deals.find((d) => d.id === id);
-              window.collectEvent("$bav2b_exposure", eventParams({
+              window.collectEvent("$bav2b_exposure", {
+                ...baseParams(),
                 exposure_type: "deal_card",
                 exposure_state: nextVisible ? "enter" : "leave",
-                deal_id: String(id),
-                deal_store: deal ? deal.store : "",
-                deal_title: deal ? deal.title : "",
-                deal_link: deal ? deal.link : "",
-              }));
+                deal_id: id,
+                deal_store: deal ? deal.store : undefined,
+                deal_title: deal ? deal.title : undefined,
+                deal_link: deal ? deal.link : undefined,
+              });
             });
           },
           { root: null, threshold: 0.6 }
